@@ -1,0 +1,44 @@
+{
+	"name": "project",
+	"version": "1.0.0",
+	"description": "SaFuTrendz Launchpad",
+	"main": "index.js",
+	"scripts": {
+		"client-install": "npm install --prefix client",
+		"start": "node server/server.js",
+		"server": "nodemon server/server.js",
+		"client": "npm start --prefix client",
+		"dev": "concurrently \"npm run server\" \"npm run client\"",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install cd client && npm run build cd client"
+	},
+	"author": "create",
+	"license": "MIT",
+	"dependencies": {
+		"@material-ui/core": "^4.12.4",
+		"@openzeppelin/contracts": "^4.5.0",
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.18.3",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.0",
+		"express": "^4.16.3",
+		"flatted": "^3.2.5",
+		"fs": "^0.0.1-security",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.7.5",
+		"passport": "^0.6.0",
+		"passport-jwt": "^4.0.0",
+		"path": "^0.12.7",
+		"react-alert": "^7.0.3",
+		"solc": "^0.8.13",
+		"validator": "^13.7.0",
+		"web3": "^1.7.3"
+	},
+	"devDependencies": {
+		"concurrently": "^3.6.1",
+		"nodemon": "^1.17.4"
+	},
+	"engines": {
+		"node": "14.17.3",
+		"npm": "6.14.13"
+	}
+}
