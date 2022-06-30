@@ -5,8 +5,8 @@ pragma solidity ^0.8.13;
 /**
  * ███████╗ █████╗ ███████╗██╗   ██╗████████╗██████╗ ███████╗███╗   ██╗██████╗ ███████╗
  * ██╔════╝██╔══██╗██╔════╝██║   ██║╚══██╔══╝██╔══██╗██╔════╝████╗  ██║██╔══██╗╚══███╔╝
- * ███████╗███████║█████╗  ██║   ██║   ██║   ██████╔╝█████╗  ██╔██╗ ██║██║  ██║  ███╔╝ 
- * ╚════██║██╔══██║██╔══╝  ██║   ██║   ██║   ██╔══██╗██╔══╝  ██║╚██╗██║██║  ██║ ███╔╝  
+ * ███████╗███████║█████╗  ██║   ██║   ██║   ██████╔╝█████╗  ██╔██╗ ██║██║  ██║  ███╔╝
+ * ╚════██║██╔══██║██╔══╝  ██║   ██║   ██║   ██╔══██╗██╔══╝  ██║╚██╗██║██║  ██║ ███╔╝
  * ███████║██║  ██║██║     ╚██████╔╝   ██║   ██║  ██║███████╗██║ ╚████║██████╔╝███████╗
  * ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
  *                                                                         ██████╗ ██████╗ ███████╗███████╗ █████╗ ██╗     ███████╗
@@ -16,10 +16,6 @@ pragma solidity ^0.8.13;
  *                                                                         ██║     ██║  ██║███████╗███████║██║  ██║███████╗███████╗
  *                                                                         ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝
  */
-
-
-
-
 
 /**
  * @dev Provides information about the current execution context, including the
@@ -31,7 +27,6 @@ pragma solidity ^0.8.13;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-
 
 abstract contract Context {
     function _msgSender() internal view virtual returns (address) {
@@ -58,7 +53,10 @@ abstract contract Context {
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
@@ -98,7 +96,10 @@ abstract contract Ownable is Context {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        require(
+            newOwner != address(0),
+            "Ownable: new owner is the zero address"
+        );
         _transferOwnership(newOwner);
     }
 
@@ -112,7 +113,6 @@ abstract contract Ownable is Context {
         emit OwnershipTransferred(oldOwner, newOwner);
     }
 }
-
 
 /**
  * @title SafeERC20
@@ -131,7 +131,10 @@ library SafeERC20 {
         address to,
         uint256 value
     ) internal {
-        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(token.transfer.selector, to, value)
+        );
     }
 
     function safeTransferFrom(
@@ -140,7 +143,10 @@ library SafeERC20 {
         address to,
         uint256 value
     ) internal {
-        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(token.transferFrom.selector, from, to, value)
+        );
     }
 
     /**
@@ -162,7 +168,10 @@ library SafeERC20 {
             (value == 0) || (token.allowance(address(this), spender) == 0),
             "SafeERC20: approve from non-zero to non-zero allowance"
         );
-        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(token.approve.selector, spender, value)
+        );
     }
 
     function safeIncreaseAllowance(
@@ -171,7 +180,14 @@ library SafeERC20 {
         uint256 value
     ) internal {
         uint256 newAllowance = token.allowance(address(this), spender) + value;
-        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(
+                token.approve.selector,
+                spender,
+                newAllowance
+            )
+        );
     }
 
     function safeDecreaseAllowance(
@@ -181,9 +197,19 @@ library SafeERC20 {
     ) internal {
         unchecked {
             uint256 oldAllowance = token.allowance(address(this), spender);
-            require(oldAllowance >= value, "SafeERC20: decreased allowance below zero");
+            require(
+                oldAllowance >= value,
+                "SafeERC20: decreased allowance below zero"
+            );
             uint256 newAllowance = oldAllowance - value;
-            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
+            _callOptionalReturn(
+                token,
+                abi.encodeWithSelector(
+                    token.approve.selector,
+                    spender,
+                    newAllowance
+                )
+            );
         }
     }
 
@@ -198,14 +224,19 @@ library SafeERC20 {
         // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that
         // the target address contains contract code and also asserts for success in the low-level call.
 
-        bytes memory returndata = address(token).functionCall(data, "SafeERC20: low-level call failed");
+        bytes memory returndata = address(token).functionCall(
+            data,
+            "SafeERC20: low-level call failed"
+        );
         if (returndata.length > 0) {
             // Return data is optional
-            require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
+            require(
+                abi.decode(returndata, (bool)),
+                "SafeERC20: ERC20 operation did not succeed"
+            );
         }
     }
 }
-
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
@@ -237,7 +268,10 @@ interface IERC20 {
      *
      * This value changes when {approve} or {transferFrom} are called.
      */
-    function allowance(address owner, address spender) external view returns (uint256);
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint256);
 
     /**
      * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
@@ -282,9 +316,12 @@ interface IERC20 {
      * @dev Emitted when the allowance of a `spender` for an `owner` is set by
      * a call to {approve}. `value` is the new allowance.
      */
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
 }
-
 
 /**
  * @dev Interface for the optional metadata functions from the ERC20 standard.
@@ -307,7 +344,6 @@ interface IERC20Metadata is IERC20 {
      */
     function decimals() external view returns (uint8);
 }
-
 
 /**
  * @dev Contract module that helps prevent reentrant calls to a function.
@@ -471,7 +507,11 @@ library EnumerableSet {
     /**
      * @dev Returns true if the value is in the set. O(1).
      */
-    function _contains(Set storage set, bytes32 value) private view returns (bool) {
+    function _contains(Set storage set, bytes32 value)
+        private
+        view
+        returns (bool)
+    {
         return set._indexes[value] != 0;
     }
 
@@ -492,7 +532,11 @@ library EnumerableSet {
      *
      * - `index` must be strictly less than {length}.
      */
-    function _at(Set storage set, uint256 index) private view returns (bytes32) {
+    function _at(Set storage set, uint256 index)
+        private
+        view
+        returns (bytes32)
+    {
         return set._values[index];
     }
 
@@ -520,7 +564,10 @@ library EnumerableSet {
      * Returns true if the value was added to the set, that is if it was not
      * already present.
      */
-    function add(Bytes32Set storage set, bytes32 value) internal returns (bool) {
+    function add(Bytes32Set storage set, bytes32 value)
+        internal
+        returns (bool)
+    {
         return _add(set._inner, value);
     }
 
@@ -530,14 +577,21 @@ library EnumerableSet {
      * Returns true if the value was removed from the set, that is if it was
      * present.
      */
-    function remove(Bytes32Set storage set, bytes32 value) internal returns (bool) {
+    function remove(Bytes32Set storage set, bytes32 value)
+        internal
+        returns (bool)
+    {
         return _remove(set._inner, value);
     }
 
     /**
      * @dev Returns true if the value is in the set. O(1).
      */
-    function contains(Bytes32Set storage set, bytes32 value) internal view returns (bool) {
+    function contains(Bytes32Set storage set, bytes32 value)
+        internal
+        view
+        returns (bool)
+    {
         return _contains(set._inner, value);
     }
 
@@ -558,7 +612,11 @@ library EnumerableSet {
      *
      * - `index` must be strictly less than {length}.
      */
-    function at(Bytes32Set storage set, uint256 index) internal view returns (bytes32) {
+    function at(Bytes32Set storage set, uint256 index)
+        internal
+        view
+        returns (bytes32)
+    {
         return _at(set._inner, index);
     }
 
@@ -570,7 +628,11 @@ library EnumerableSet {
      * this function has an unbounded cost, and using it as part of a state-changing function may render the function
      * uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
      */
-    function values(Bytes32Set storage set) internal view returns (bytes32[] memory) {
+    function values(Bytes32Set storage set)
+        internal
+        view
+        returns (bytes32[] memory)
+    {
         return _values(set._inner);
     }
 
@@ -586,7 +648,10 @@ library EnumerableSet {
      * Returns true if the value was added to the set, that is if it was not
      * already present.
      */
-    function add(AddressSet storage set, address value) internal returns (bool) {
+    function add(AddressSet storage set, address value)
+        internal
+        returns (bool)
+    {
         return _add(set._inner, bytes32(uint256(uint160(value))));
     }
 
@@ -596,14 +661,21 @@ library EnumerableSet {
      * Returns true if the value was removed from the set, that is if it was
      * present.
      */
-    function remove(AddressSet storage set, address value) internal returns (bool) {
+    function remove(AddressSet storage set, address value)
+        internal
+        returns (bool)
+    {
         return _remove(set._inner, bytes32(uint256(uint160(value))));
     }
 
     /**
      * @dev Returns true if the value is in the set. O(1).
      */
-    function contains(AddressSet storage set, address value) internal view returns (bool) {
+    function contains(AddressSet storage set, address value)
+        internal
+        view
+        returns (bool)
+    {
         return _contains(set._inner, bytes32(uint256(uint160(value))));
     }
 
@@ -624,7 +696,11 @@ library EnumerableSet {
      *
      * - `index` must be strictly less than {length}.
      */
-    function at(AddressSet storage set, uint256 index) internal view returns (address) {
+    function at(AddressSet storage set, uint256 index)
+        internal
+        view
+        returns (address)
+    {
         return address(uint160(uint256(_at(set._inner, index))));
     }
 
@@ -636,7 +712,11 @@ library EnumerableSet {
      * this function has an unbounded cost, and using it as part of a state-changing function may render the function
      * uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
      */
-    function values(AddressSet storage set) internal view returns (address[] memory) {
+    function values(AddressSet storage set)
+        internal
+        view
+        returns (address[] memory)
+    {
         bytes32[] memory store = _values(set._inner);
         address[] memory result;
 
@@ -669,14 +749,21 @@ library EnumerableSet {
      * Returns true if the value was removed from the set, that is if it was
      * present.
      */
-    function remove(UintSet storage set, uint256 value) internal returns (bool) {
+    function remove(UintSet storage set, uint256 value)
+        internal
+        returns (bool)
+    {
         return _remove(set._inner, bytes32(value));
     }
 
     /**
      * @dev Returns true if the value is in the set. O(1).
      */
-    function contains(UintSet storage set, uint256 value) internal view returns (bool) {
+    function contains(UintSet storage set, uint256 value)
+        internal
+        view
+        returns (bool)
+    {
         return _contains(set._inner, bytes32(value));
     }
 
@@ -697,7 +784,11 @@ library EnumerableSet {
      *
      * - `index` must be strictly less than {length}.
      */
-    function at(UintSet storage set, uint256 index) internal view returns (uint256) {
+    function at(UintSet storage set, uint256 index)
+        internal
+        view
+        returns (uint256)
+    {
         return uint256(_at(set._inner, index));
     }
 
@@ -709,7 +800,11 @@ library EnumerableSet {
      * this function has an unbounded cost, and using it as part of a state-changing function may render the function
      * uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block.
      */
-    function values(UintSet storage set) internal view returns (uint256[] memory) {
+    function values(UintSet storage set)
+        internal
+        view
+        returns (uint256[] memory)
+    {
         bytes32[] memory store = _values(set._inner);
         uint256[] memory result;
 
@@ -720,7 +815,6 @@ library EnumerableSet {
         return result;
     }
 }
-
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations.
@@ -734,7 +828,11 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+    function tryAdd(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
         unchecked {
             uint256 c = a + b;
             if (c < a) return (false, 0);
@@ -747,7 +845,11 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+    function trySub(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
         unchecked {
             if (b > a) return (false, 0);
             return (true, a - b);
@@ -759,7 +861,11 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+    function tryMul(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
         unchecked {
             // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
             // benefit is lost if 'b' is also tested.
@@ -776,7 +882,11 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+    function tryDiv(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
         unchecked {
             if (b == 0) return (false, 0);
             return (true, a / b);
@@ -788,7 +898,11 @@ library SafeMath {
      *
      * _Available since v3.4._
      */
-    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+    function tryMod(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
         unchecked {
             if (b == 0) return (false, 0);
             return (true, a % b);
@@ -941,7 +1055,6 @@ library SafeMath {
     }
 }
 
-
 /**
  * @dev Collection of functions related to the address type
  */
@@ -997,10 +1110,16 @@ library Address {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(address(this).balance >= amount, "Address: insufficient balance");
+        require(
+            address(this).balance >= amount,
+            "Address: insufficient balance"
+        );
 
         (bool success, ) = recipient.call{value: amount}("");
-        require(success, "Address: unable to send value, recipient may have reverted");
+        require(
+            success,
+            "Address: unable to send value, recipient may have reverted"
+        );
     }
 
     /**
@@ -1021,7 +1140,10 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
+    function functionCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
         return functionCall(target, data, "Address: low-level call failed");
     }
 
@@ -1055,7 +1177,13 @@ library Address {
         bytes memory data,
         uint256 value
     ) internal returns (bytes memory) {
-        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
+        return
+            functionCallWithValue(
+                target,
+                data,
+                value,
+                "Address: low-level call with value failed"
+            );
     }
 
     /**
@@ -1070,10 +1198,15 @@ library Address {
         uint256 value,
         string memory errorMessage
     ) internal returns (bytes memory) {
-        require(address(this).balance >= value, "Address: insufficient balance for call");
+        require(
+            address(this).balance >= value,
+            "Address: insufficient balance for call"
+        );
         require(isContract(target), "Address: call to non-contract");
 
-        (bool success, bytes memory returndata) = target.call{value: value}(data);
+        (bool success, bytes memory returndata) = target.call{value: value}(
+            data
+        );
         return verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -1083,8 +1216,17 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
-        return functionStaticCall(target, data, "Address: low-level static call failed");
+    function functionStaticCall(address target, bytes memory data)
+        internal
+        view
+        returns (bytes memory)
+    {
+        return
+            functionStaticCall(
+                target,
+                data,
+                "Address: low-level static call failed"
+            );
     }
 
     /**
@@ -1110,8 +1252,16 @@ library Address {
      *
      * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
-        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
+    function functionDelegateCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
+        return
+            functionDelegateCall(
+                target,
+                data,
+                "Address: low-level delegate call failed"
+            );
     }
 
     /**
@@ -1160,39 +1310,77 @@ library Address {
     }
 }
 
-
 library TransferHelper {
-    
-    bytes4 private constant FUNC_SELECTOR = bytes4(keccak256("transfer(address,uint256)"));
-    bytes4 private constant FUNC_SELECTOR1 = bytes4(keccak256("approve(address,uint256)"));
-    bytes4 private constant FUNC_SELECTOR2 = bytes4(keccak256("transferFrom(address,uint256)"));
+    bytes4 private constant FUNC_SELECTOR =
+        bytes4(keccak256("transfer(address,uint256)"));
+    bytes4 private constant FUNC_SELECTOR1 =
+        bytes4(keccak256("approve(address,uint256)"));
+    bytes4 private constant FUNC_SELECTOR2 =
+        bytes4(keccak256("transferFrom(address,uint256)"));
 
-    function safeApprove(address token, address to, uint value) internal {
-        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(FUNC_SELECTOR1, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))), 'MAPPY_TransferHelper: APPROVE_FAILED');
+    function safeApprove(
+        address token,
+        address to,
+        uint256 value
+    ) internal {
+        (bool success, bytes memory data) = token.call(
+            abi.encodeWithSelector(FUNC_SELECTOR1, to, value)
+        );
+        require(
+            success && (data.length == 0 || abi.decode(data, (bool))),
+            "MAPPY_TransferHelper: APPROVE_FAILED"
+        );
     }
 
-    function safeTransfer(address token, address to, uint value) internal {
-        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(FUNC_SELECTOR, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))), 'MAPPY_TransferHelper: TRANSFER_FAILED');
+    function safeTransfer(
+        address token,
+        address to,
+        uint256 value
+    ) internal {
+        (bool success, bytes memory data) = token.call(
+            abi.encodeWithSelector(FUNC_SELECTOR, to, value)
+        );
+        require(
+            success && (data.length == 0 || abi.decode(data, (bool))),
+            "MAPPY_TransferHelper: TRANSFER_FAILED"
+        );
     }
 
-    function safeTransferFrom(address token, address from, address to, uint value) internal {
-        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(FUNC_SELECTOR2, from, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))), 'MAPPY_TransferHelper: TRANSFER_FROM_FAILED');
+    function safeTransferFrom(
+        address token,
+        address from,
+        address to,
+        uint256 value
+    ) internal {
+        (bool success, bytes memory data) = token.call(
+            abi.encodeWithSelector(FUNC_SELECTOR2, from, to, value)
+        );
+        require(
+            success && (data.length == 0 || abi.decode(data, (bool))),
+            "MAPPY_TransferHelper: TRANSFER_FROM_FAILED"
+        );
     }
-    
+
     // sends ETH or an erc20 token
-    function safeTransferBaseToken(address token, address payable to, uint value, bool isERC20) internal {
+    function safeTransferBaseToken(
+        address token,
+        address payable to,
+        uint256 value,
+        bool isERC20
+    ) internal {
         if (!isERC20) {
             to.transfer(value);
         } else {
-            (bool success, bytes memory data) = token.call(abi.encodeWithSelector(FUNC_SELECTOR, to, value));
-            require(success && (data.length == 0 || abi.decode(data, (bool))), 'MAPPY_TransferHelper: TRANSFER_FAILED');
+            (bool success, bytes memory data) = token.call(
+                abi.encodeWithSelector(FUNC_SELECTOR, to, value)
+            );
+            require(
+                success && (data.length == 0 || abi.decode(data, (bool))),
+                "MAPPY_TransferHelper: TRANSFER_FAILED"
+            );
         }
     }
 }
-
 
 contract SafuTrendzPresale is ReentrancyGuard, Ownable {
     using Address for address;
@@ -1225,19 +1413,23 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
         uint256 base; // Total base token (usually ETH) deposited by user, can be withdrawn on presale failure
         uint256 sale; // Num presale tokens a user owned, can be withdrawn on presale success
     }
-    
+
     struct TokenInfo {
         string name;
         string symbol;
         uint256 totalsupply;
         uint256 decimal;
     }
-  
+
     PresaleInfo public presale_info;
     PresaleStatus public status;
     TokenInfo public tokeninfo;
 
     mapping(address => BuyerInfo) public buyers;
+
+    mapping(address => address[]) public tokensUpForStaking; //--
+    address[] public allFarmingContracts;
+    uint256 public totalStakingContracts;
 
     event UserDepsitedSuccess(address, uint256);
     event UserWithdrawSuccess(uint256);
@@ -1248,12 +1440,12 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
 
     uint256 private constant privilegedTime = 10 * 60; // 10 min
 
-    constructor (
+    constructor(
         address _sale_token,
         uint256 _token_rate,
-        uint256 _raise_min, 
-        uint256 _raise_max, 
-        uint256 _softcap, 
+        uint256 _raise_min,
+        uint256 _raise_max,
+        uint256 _softcap,
         uint256 _hardcap,
         uint256 _presale_start,
         uint256 _presale_end,
@@ -1261,13 +1453,12 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
         uint256 serviceFee_,
         uint256 _raisedFee
     ) payable {
-
         // receive fees
-        require(msg.value >= serviceFee_ , "not enough fee");
+        require(msg.value >= serviceFee_, "not enough fee");
         payable(serviceFeeReceiver_).transfer(msg.value);
 
         require(_sale_token != address(0), "MAPPY_Init: Zero Address");
-        
+
         presale_info.sale_token = address(_sale_token);
         presale_info.token_rate = _token_rate;
         presale_info.raise_min = _raise_min;
@@ -1275,17 +1466,17 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
         presale_info.softcap = _softcap;
         presale_info.hardcap = _hardcap;
 
-        presale_info.token_count= _hardcap * _token_rate;
+        presale_info.token_count = _hardcap * _token_rate;
 
         presale_info.presale_end = _presale_end;
-        presale_info.presale_start =  _presale_start;
-        
+        presale_info.presale_start = _presale_start;
+
         //Set token info
         tokeninfo.name = IERC20Metadata(presale_info.sale_token).name();
         tokeninfo.symbol = IERC20Metadata(presale_info.sale_token).symbol();
         tokeninfo.decimal = IERC20Metadata(presale_info.sale_token).decimals();
-        tokeninfo.totalsupply = IERC20Metadata(presale_info.sale_token).totalSupply();
-
+        tokeninfo.totalsupply = IERC20Metadata(presale_info.sale_token)
+            .totalSupply();
     }
 
     function cancel() public {
@@ -1293,46 +1484,63 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
     }
 
     function finalize() public {
-         status.force_success = true;
+        status.force_success = true;
     }
 
     function presaleStatus() public view returns (uint256) {
-        if( status.force_failed ){
+        if (status.force_failed) {
             return 3; //failure
         }
-        if (status.force_success){
+        if (status.force_success) {
             return 2;
         }
-        if ((getTimestamp()> presale_info.presale_end) && (status.raised_amount < presale_info.softcap)) {
+        if (
+            (getTimestamp() > presale_info.presale_end) &&
+            (status.raised_amount < presale_info.softcap)
+        ) {
             return 3; // Failure
         }
-     
-        if (status.raised_amount >= presale_info.hardcap) { 
+
+        if (status.raised_amount >= presale_info.hardcap) {
             return 2; // Wonderful - reached to Hardcap
         }
-        if ((getTimestamp() > presale_info.presale_end) && (status.raised_amount >= presale_info.softcap)) {
+        if (
+            (getTimestamp() > presale_info.presale_end) &&
+            (status.raised_amount >= presale_info.softcap)
+        ) {
             return 2; // SUCCESS - Presale ended with reaching Softcap
         }
-        if ((getTimestamp() >= presale_info.presale_start) && (getTimestamp() <= presale_info.presale_end)) {
+        if (
+            (getTimestamp() >= presale_info.presale_start) &&
+            (getTimestamp() <= presale_info.presale_end)
+        ) {
             return 1; // ACTIVE - Deposits enabled, now in Presale
         }
-            return 0; // QUEUED - Awaiting start block
+        return 0; // QUEUED - Awaiting start block
     }
 
-    function balanceThis () public view returns (uint256)  {
-        
-        uint256 xx=0;
+    function balanceThis() public view returns (uint256) {
+        uint256 xx = 0;
         xx = presale_info.token_count;
 
         return xx;
     }
-    
+
     // Accepts msg.value for eth or _amount for ERC20 tokens
-    function userDeposit () public payable nonReentrant {
+    function userDeposit() public payable nonReentrant {
         require(presaleStatus() == 1, "Not Active");
-        require(presale_info.raise_min <= msg.value, "MAPPY_Deposit: Balance is insufficent");
-        require(presale_info.raise_max >= msg.value, "MAPPY_Deposit: Balance is too much");
-        require(buyers[msg.sender].base + msg.value <= presale_info.raise_max, "Cannot exceed maximum buy value");
+        require(
+            presale_info.raise_min <= msg.value,
+            "MAPPY_Deposit: Balance is insufficent"
+        );
+        require(
+            presale_info.raise_max >= msg.value,
+            "MAPPY_Deposit: Balance is too much"
+        );
+        require(
+            buyers[msg.sender].base + msg.value <= presale_info.raise_max,
+            "Cannot exceed maximum buy value"
+        );
 
         BuyerInfo storage buyer = buyers[msg.sender];
 
@@ -1345,15 +1553,21 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
             amount_in = allowance;
         }
 
-        uint256 tokensSold = amount_in.mul(presale_info.token_rate)/(10**18);
+        uint256 tokensSold = amount_in.mul(presale_info.token_rate) / (10**18);
 
         require(tokensSold > 0, "MAPPY_Deposit: ZERO TOKENS");
 
-        require(buyer.base + amount_in <= presale_info.raise_max, "buyer cannot buy more than maximum");
+        require(
+            buyer.base + amount_in <= presale_info.raise_max,
+            "buyer cannot buy more than maximum"
+        );
 
         // require(status.raised_amount * presale_info.token_rate <= IERC20(presale_info.sale_token).balanceOf(address(this)), "Token remain error");
-        require(status.raised_amount * presale_info.token_rate <= presale_info.token_count, "Token remain error");
-        
+        require(
+            status.raised_amount * presale_info.token_rate <=
+                presale_info.token_count,
+            "Token remain error"
+        );
 
         if (buyer.base == 0) {
             status.num_buyers++;
@@ -1362,47 +1576,58 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
         buyers[msg.sender].sale = buyers[msg.sender].sale.add(tokensSold);
         status.raised_amount = status.raised_amount.add(amount_in);
         status.sold_amount = status.sold_amount.add(tokensSold);
-        
+
         // return unused ETH
         if (amount_in < msg.value) {
             payable(msg.sender).transfer(msg.value.sub(amount_in));
         }
-        
+
         emit UserDepsitedSuccess(msg.sender, msg.value);
     }
-    
+
     // withdraw presale tokens
     // percentile withdrawls allows fee on transfer or rebasing tokens to still work
-    function userWithdrawTokens () public nonReentrant {
+    function userWithdrawTokens() public nonReentrant {
         require(presaleStatus() == 2, "MAPPY_Withdraw: Not succeeded"); // Success
         // require(block.timestamp >= presale_info.presale_end + lock_delay, "MAPPY_Withdraw: Token Locked."); // Lock duration check
-        
+
         BuyerInfo storage buyer = buyers[msg.sender];
         uint256 remaintoken = status.sold_amount.sub(status.token_withdraw);
-        require(remaintoken >= buyer.sale, "MAPPY_Withdraw: Nothing to withdraw.");
-        
-        TransferHelper.safeTransfer(address(presale_info.sale_token), msg.sender, buyer.sale*(10**tokeninfo.decimal));
-        
+        require(
+            remaintoken >= buyer.sale,
+            "MAPPY_Withdraw: Nothing to withdraw."
+        );
+
+        TransferHelper.safeTransfer(
+            address(presale_info.sale_token),
+            msg.sender,
+            buyer.sale * (10**tokeninfo.decimal)
+        );
+
         status.token_withdraw = status.token_withdraw.add(buyer.sale);
         buyers[msg.sender].sale = 0;
         buyers[msg.sender].base = 0;
-        
+
         emit UserWithdrawTokensSuccess(buyer.sale);
     }
+
     // On presale failure
     // Percentile withdrawls allows fee on transfer or rebasing tokens to still work
-    function userWithdrawBaseTokens () public nonReentrant {
+    function userWithdrawBaseTokens() public nonReentrant {
         require(presaleStatus() == 3, "MAPPY_Withdraw_Base: Not failed."); // FAILED
-       
+
         // Refund
         BuyerInfo storage buyer = buyers[msg.sender];
-        
+
         uint256 remainingBaseBalance = address(this).balance;
-        
-        require(remainingBaseBalance >= buyer.base, "MAPPY_Withdraw_Base: Nothing to withdraw.");
+
+        require(
+            remainingBaseBalance >= buyer.base,
+            "MAPPY_Withdraw_Base: Nothing to withdraw."
+        );
 
         status.base_withdraw = status.base_withdraw.add(buyer.base);
-        
+
         address payable reciver = payable(msg.sender);
         reciver.transfer(buyer.base);
 
@@ -1412,10 +1637,10 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
 
         buyer.base = 0;
         buyer.sale = 0;
-        
+
         emit UserWithdrawSuccess(buyer.base);
     }
-    
+
     function getBuySalevalue() public view returns (uint256) {
         return buyers[msg.sender].sale;
     }
@@ -1423,37 +1648,60 @@ contract SafuTrendzPresale is ReentrancyGuard, Ownable {
     function getBuyBasevalue() public view returns (uint256) {
         return buyers[msg.sender].base;
     }
+
     // On presale failure
     // Allows the owner to withdraw the tokens they sent for presale
-    function ownerWithdrawTokens () private onlyOwner {
-        require(presaleStatus() == 3, "MAPPY_Withdraw_Base_Owner: Only failed status."); // FAILED
-        TransferHelper.safeTransfer(address(presale_info.sale_token), owner(), IERC20(presale_info.sale_token).balanceOf(address(this)) * (10**tokeninfo.decimal) );
-        
-        emit UserWithdrawSuccess(IERC20(presale_info.sale_token).balanceOf(address(this)));
+    function ownerWithdrawTokens() private onlyOwner {
+        require(
+            presaleStatus() == 3,
+            "MAPPY_Withdraw_Base_Owner: Only failed status."
+        ); // FAILED
+        TransferHelper.safeTransfer(
+            address(presale_info.sale_token),
+            owner(),
+            IERC20(presale_info.sale_token).balanceOf(address(this)) *
+                (10**tokeninfo.decimal)
+        );
+
+        emit UserWithdrawSuccess(
+            IERC20(presale_info.sale_token).balanceOf(address(this))
+        );
     }
 
-    function withdrawICOCoin (address _address, address _receiver) public onlyOwner {
-
-        payable(_receiver).transfer(address(this).balance * _raisedFee / 1000);
+    function withdrawICOCoin(address _address, address _receiver)
+        public
+        onlyOwner
+    {
+        payable(_receiver).transfer(
+            (address(this).balance * _raisedFee) / 1000
+        );
         payable(_address).transfer(address(this).balance);
     }
 
-    function getTimestamp () public view returns (uint256) {
+    function getTimestamp() public view returns (uint256) {
         return block.timestamp;
     }
 
-    function setLockDelay (uint256 delay) public onlyOwner {
+    function setLockDelay(uint256 delay) public onlyOwner {
         lock_delay = delay;
     }
 
     function remainingBurn() public onlyOwner {
         require(presaleStatus() == 2, "MAPPY_Burn: Not succeeded"); // Success
-        require(presale_info.hardcap * presale_info.token_rate >= status.sold_amount, "MAPPY_Burn: Nothing to burn");
-        
-        uint256 rushTokenAmount = presale_info.hardcap * presale_info.token_rate - status.sold_amount;
+        require(
+            presale_info.hardcap * presale_info.token_rate >=
+                status.sold_amount,
+            "MAPPY_Burn: Nothing to burn"
+        );
 
-        TransferHelper.safeTransfer(address(presale_info.sale_token), address(deadaddr), rushTokenAmount);
+        uint256 rushTokenAmount = presale_info.hardcap *
+            presale_info.token_rate -
+            status.sold_amount;
+
+        TransferHelper.safeTransfer(
+            address(presale_info.sale_token),
+            address(deadaddr),
+            rushTokenAmount
+        );
     }
-
-
 }

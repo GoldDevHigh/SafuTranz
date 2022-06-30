@@ -67,7 +67,7 @@ const AddressSchema = new Schema({
 			}
 		}
 	],
-	
+
 	presaleRate: {
 		type: String
 	},
@@ -153,9 +153,21 @@ const AddressSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	FairState: {
+		type: Boolean,
+		default: false
+	},
 	date: {
 		type: Date,
 		default: Date.now
+	},
+	alarmTime: {
+		type: Date,
+		default: Date.now
+	},
+	alarmState: {
+		type: Boolean,
+		default: false
 	}
 });
 

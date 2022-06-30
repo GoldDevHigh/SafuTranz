@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Address = require('../models/Address.js');
-const Auth = require("../models/Auth.js");
+const Auth = require('../models/Auth.js');
 
 // const compiler = require('../scripts/compile.js');
 const fs = require('fs');
@@ -137,6 +137,7 @@ router.post('/addPresaleAddress', (req, res) => {
 	updateAddress.pancakeswapLiquidity = req.body.pancakeswapLiquidity;
 	updateAddress.pancakeswapRate = req.body.pancakeswapRate;
 	updateAddress.pancakeswapLockup = req.body.pancakeswapLockup;
+	updateAddress.FairState = req.body.FairState;
 
 	Address.findOneAndUpdate(
 		{ tokenAddress: req.body.tokenAddress },
@@ -169,8 +170,6 @@ router.post('/removeWhitelist', (req, res) => {
 		})
 		.catch((err) => res.status(404).json(err));
 });
-
-
 
 router.get('/addWhitelist/:id', (req, res) => {
 	Address.findOne({ launchpadAddress: req.params.id })

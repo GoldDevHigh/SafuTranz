@@ -208,7 +208,7 @@ router.post('/setNetFeeValueLaunch', (req, res) => {
 // @route ---> GET api/auth/getNetFeeValueLaunch
 // @desc  ---> get net fee input from launch
 // @access --> Public
-router.post('/getNetFeeValueLaunch', (req, res) => {
+router.get('/getNetFeeValueLaunch', (req, res) => {
 	User.findOne()
 		.then((dat) => {
 			res.json(dat.netFeeValueLaunch);
