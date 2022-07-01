@@ -10,84 +10,89 @@ const AuthSchema = new Schema({
 		type: String
 	},
 
-	netFeeValueToken: 
-		{
-			BSC: {
-				type: Number,
-				default:0.15
-			},
-			BSCTest: {
-				type: Number,
-				default:0.02
-			},
-			ETH: {
-				type: Number,
-				default:0.03
-			},
-			Ropsten: {
-				type: Number,
-				default:0.005
-			},
-			Cronos: {
-				type: Number,
-				default:80
-			},
-			PulseTest: {
-				type: Number,
-				default:0.1
-			},
-			Avalanche: {
-				type: Number,
-				default:0.8
-			},
-			Polygon: {
-				type: Number,
-				default:30
-			},
+	netFeeValueToken: {
+		BSC: {
+			type: Number,
+			default: 0.15
+		},
+		BSCTest: {
+			type: Number,
+			default: 0.02
+		},
+		ETH: {
+			type: Number,
+			default: 0.03
+		},
+		Ropsten: {
+			type: Number,
+			default: 0.005
+		},
+		Cronos: {
+			type: Number,
+			default: 80
+		},
+		PulseTest: {
+			type: Number,
+			default: 0.1
+		},
+		Avalanche: {
+			type: Number,
+			default: 0.8
+		},
+		AvalancheTest: {
+			type: Number,
+			default: 0.1
+		},
+		Polygon: {
+			type: Number,
+			default: 30
+		}
+	},
 
+	netFeeValueLaunch: {
+		BSC: {
+			type: Number,
+			default: 0.7
+		},
+		BSCTest: {
+			type: Number,
+			default: 0.3
+		},
+		ETH: {
+			type: Number,
+			default: 0.13
+		},
+		Ropsten: {
+			type: Number,
+			default: 0.02
+		},
+		Cronos: {
+			type: Number,
+			default: 800
+		},
+		PulseTest: {
+			type: Number,
+			default: 0.2
+		},
+		Avalanche: {
+			type: Number,
+			default: 8
+		},
+		AvalancheTest: {
+			type: Number,
+			default: 0.3
+		},
+		Polygon: {
+			type: Number,
+			default: 85
+		}
 	},
-	
-	netFeeValueLaunch: 
-		{
-			BSC: {
-				type: Number,
-				default:0.7
-			},
-			BSCTest: {
-				type: Number,
-				default:0.3
-			},
-			ETH: {
-				type: Number,
-				default:0.13
-			},
-			Ropsten: {
-				type: Number,
-				default:0.02
-			},
-			Cronos: {
-				type: Number,
-				default:800
-			},
-			PulseTest: {
-				type: Number,
-				default:0.2
-			},
-			Avalanche: {
-				type: Number,
-				default:8
-			},
-			Polygon: {
-				type: Number,
-				default:85
-			},
 
+	raisedFee: {
+		type: Number,
+		default: 17
 	},
-	
-	raisedFee:{
-		type:Number,
-		default:17
-	},
+
 	date: {
 		type: Date,
 		default: Date.now

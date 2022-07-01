@@ -3,10 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors');
+const passport = require('passport');
 const api = require('./routes/api.js');
 const auth = require('./routes/auth');
-const passport = require('passport');
+const alarm = require('./routes/alarm');
 
 const db = require('./config/keys.js').mongoURI;
 
@@ -36,6 +36,7 @@ app.use(bodyParser.json());
 
 app.use('/api', api);
 app.use('/api/auth', auth);
+app.use('/api/alarm', alarm);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

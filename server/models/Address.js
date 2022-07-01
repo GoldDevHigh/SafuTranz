@@ -160,14 +160,6 @@ const AddressSchema = new Schema({
 	date: {
 		type: Date,
 		default: Date.now
-	},
-	alarmTime: {
-		type: Date,
-		default: Date.now
-	},
-	alarmState: {
-		type: Boolean,
-		default: false
 	}
 });
 
