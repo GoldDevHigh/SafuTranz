@@ -23,7 +23,6 @@ router.post('/register', (req, res) => {
 		endAlarmState: req.body.endAlarmState
 	};
 
-	console.log(req.body);
 	Alarm.findOne({ userAddress: req.body.userAddress })
 		.then((data) => {
 			if (data) {
@@ -31,16 +30,15 @@ router.post('/register', (req, res) => {
 				if (alarmData) {
 					var dt = data.alarmValue.map((value) => {
 						if (value.tokenAddress === req.body.tokenAddress) {
-							value.startAlarmTime5 = req.body.startAlarmTime5;
-							value.startAlarmTime15 = req.body.startAlarmTime15;
-							value.startAlarmTime30 = req.body.startAlarmTime30;
-							value.startAlarmState = req.body.startAlarmState;
-							value.endAlarmState = req.body.endAlarmState;
-							value.endAlarmTime5 = req.body.endAlarmTime5;
-							value.endAlarmTime15 = req.body.endAlarmTime15;
-							value.endAlarmTim30 = req.body.endAlarmTime30;
+							if (req.body.startAlarmTime5) value.startAlarmTime5 = req.body.startAlarmTime5;
+							if (req.body.startAlarmTime15) value.startAlarmTime15 = req.body.startAlarmTime15;
+							if (req.body.startAlarmTime30) value.startAlarmTime30 = req.body.startAlarmTime30;
+							if (req.body.startAlarmState) value.startAlarmState = req.body.startAlarmState;
+							if (req.body.endAlarmState) value.endAlarmState = req.body.endAlarmState;
+							if (req.body.endAlarmTime5) value.endAlarmTime5 = req.body.endAlarmTime5;
+							if (req.body.endAlarmTime15) value.endAlarmTime15 = req.body.endAlarmTime15;
+							if (req.body.endAlarmTim30) value.endAlarmTim30 = req.body.endAlarmTime30;
 						}
-						console.log('tokenAddress:', value);
 						return value;
 					});
 					data.alarmValue = dt;
