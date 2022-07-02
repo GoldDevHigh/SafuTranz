@@ -30,14 +30,18 @@ router.post('/register', (req, res) => {
 				if (alarmData) {
 					var dt = data.alarmValue.map((value) => {
 						if (value.tokenAddress === req.body.tokenAddress) {
-							if (req.body.startAlarmTime5) value.startAlarmTime5 = req.body.startAlarmTime5;
-							if (req.body.startAlarmTime15) value.startAlarmTime15 = req.body.startAlarmTime15;
-							if (req.body.startAlarmTime30) value.startAlarmTime30 = req.body.startAlarmTime30;
-							if (req.body.startAlarmState) value.startAlarmState = req.body.startAlarmState;
-							if (req.body.endAlarmState) value.endAlarmState = req.body.endAlarmState;
-							if (req.body.endAlarmTime5) value.endAlarmTime5 = req.body.endAlarmTime5;
-							if (req.body.endAlarmTime15) value.endAlarmTime15 = req.body.endAlarmTime15;
-							if (req.body.endAlarmTim30) value.endAlarmTim30 = req.body.endAlarmTime30;
+							if (req.body.startAlarmTime5 !== undefined)
+								value.startAlarmTime5 = req.body.startAlarmTime5;
+							if (req.body.startAlarmTime15 !== undefined)
+								value.startAlarmTime15 = req.body.startAlarmTime15;
+							if (req.body.startAlarmTime30 !== undefined)
+								value.startAlarmTime30 = req.body.startAlarmTime30;
+							if (req.body.startAlarmState !== undefined)
+								value.startAlarmState = req.body.startAlarmState;
+							if (req.body.endAlarmState !== undefined) value.endAlarmState = req.body.endAlarmState;
+							if (req.body.endAlarmTime5 !== undefined) value.endAlarmTime5 = req.body.endAlarmTime5;
+							if (req.body.endAlarmTime15 !== undefined) value.endAlarmTime15 = req.body.endAlarmTime15;
+							if (req.body.endAlarmTime30 !== undefined) value.endAlarmTime30 = req.body.endAlarmTime30;
 						}
 						return value;
 					});
@@ -64,8 +68,6 @@ router.post('/register', (req, res) => {
 router.post('/data', (req, res) => {
 	Alarm.findOne({ userAddress: req.body.userAddress })
 		.then((dat) => {
-			// const re = dat.alarmValue.find((dt) => dt.tokenAddress === req.body.tokenAddress);
-			// console.log(re);
 			res.json(dat);
 		})
 		.catch((err) => res.status(404).json(err));
