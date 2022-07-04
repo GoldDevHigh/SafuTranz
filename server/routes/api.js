@@ -33,17 +33,31 @@ router.get('/getTokenContractBytecode', (req, res) => {
 });
 
 router.post('/addTokenAddress', (req, res) => {
-	const newAddress = new Address({
-		userAddress: req.body.userAddress,
-		tokenAddress: req.body.tokenAddress,
-		tokenName: req.body.tokenName,
-		tokenSymbol: req.body.tokenSymbol,
-		tokenDecimal: req.body.tokenDecimal,
-		tokenSupply: req.body.tokenSupply,
-		chainID: req.body.chainID
-	});
-
-	newAddress.save().then((data) => res.json(data)).catch((err) => console.log(err));
+	Address.findOne({ tokenAddress: req.body.tokenAddress })
+		.then((dat) => {
+			if (dat) {
+				dat.userAddress = req.body.userAddress;
+				dat.tokenAddress = req.body.tokenAddress;
+				dat.tokenName = req.body.tokenName;
+				dat.tokenSymbol = req.body.tokenSymbol;
+				dat.tokenDecimal = req.body.tokenDecimal;
+				dat.tokenSupply = req.body.tokenSupply;
+				dat.chainID = req.body.chainID;
+				dat.save().then((data) => res.json(data)).catch((err) => console.log(err));
+			} else {
+				const newAddress = new Address({
+					userAddress: req.body.userAddress,
+					tokenAddress: req.body.tokenAddress,
+					tokenName: req.body.tokenName,
+					tokenSymbol: req.body.tokenSymbol,
+					tokenDecimal: req.body.tokenDecimal,
+					tokenSupply: req.body.tokenSupply,
+					chainID: req.body.chainID
+				});
+				newAddress.save().then((data) => res.json(data)).catch((err) => console.log(err));
+			}
+		})
+		.catch((err) => console.log(err));
 });
 
 router.get('/getPresaleContract', (req, res) => {
