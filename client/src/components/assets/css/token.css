@@ -1,0 +1,44 @@
+#tokenName {
+	width: 250px;
+	font-size: 20px;
+	background-color: black;
+	border-radius: 30px;
+	padding-left: 20px;
+	height: 40px;
+	border-color: darkgoldenrod;
+}
+#tokenName:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+#tokenName:placeholder-shown {
+	color: rgb(8, 8, 8);
+}
+.token-text-hold {
+	color: #6d6d6b;
+}
+
+#token-text {
+	color: #fdfdf7;
+	float: center;
+	margin-left: -150px;
+}
+.field {
+	margin-top: 20px;
+}
+.token-button {
+	background-image: linear-gradient(135deg, #ebd15f, #fa0);
+	width: 200px;
+	height: 40px;
+	border-radius: 30px;
+	color: #000;
+}
+
+.token-button:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+.token-info {
+	color: rgb(132, 132, 160);
+}
+.rs-input-group {
+	border: 0 !important;
+}

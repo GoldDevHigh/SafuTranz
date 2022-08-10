@@ -1,0 +1,31 @@
+export const GET_ERRORS = 'GET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const GET_PADS = 'GET_PADS';
+export const GET_PAD = 'GET_PAD';
+export const PAD_LOADING = 'PAD_LOADING';
+export const GET_TOKEN = 'GET_TOKEN';
+export const SET_TOKEN = 'SET_TOKEN';
+export const TOKEN_LOADING = 'TOKEN_LOADING';
+export const TOKEN_SIGN_DATA = 'TOKEN_SIGN_DATA';
+export const GET_WHILTELIST = 'GET_WHILTELIST';
+export const SET_WHILTELIST_STATE = 'SET_WHILTELIST_STATE';
+export const GET_WHILTELIST_EVERY_DATA = 'GET_WHILTELIST_EVERY_DATA';
+export const SET_BUFFER_DATA = 'SET_BUFFER_DATA';
+export const SET_BUFFER_DATA1 = 'SET_BUFFER_DATA1';
+export const GET_SUCCESS = 'GET_SUCCESS';
+
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const GET_VERIFY = 'GET_VERIFY';
+export const SET_ESCROW_ADDRESS = 'SET_ESCROW_ADDRESS';
+export const GET_ESCROW_ADDRESS = 'GET_ESCROW_ADDRESS';
+
+export const SET_NETFEE_TOKEN = 'SET_NETFEE_TOKEN';
+export const GET_NETFEE_TOKEN = 'GET_NETFEE_TOKEN';
+export const SET_NETFEE_LAUNCH = 'SET_NETFEE_LAUNCH';
+export const GET_NETFEE_LAUNCH = 'GET_NETFEE_LAUNCH';
+
+export const GET_RAISEDFEE = 'GET_RAISEDFEE';
+
+export const GET_ALARM_DATA = 'GET_ALARM_DATA';
+export const SET_ALARM_DATA = 'SET_ALARM_DATA';

@@ -1,0 +1,235 @@
+.pad-list-main {
+	margin-top: 50px;
+	margin-left: 8%;
+	margin-right: 8%;
+	padding: auto;
+}
+
+.containers-card {
+	justify-content: center;
+	align-items: center;
+}
+
+.pay-input {
+	width: 60%;
+	font-size: 20px;
+	background-color: black;
+	border-radius: 30px;
+	padding-left: 20px;
+	padding-right: 20%;
+	height: 40px;
+	border-color: rgb(245, 163, 12);
+	color: rgb(250, 246, 241);
+}
+.pay-input:hover {
+	box-shadow: 0 0 15px rgba(75, 73, 70, 0.788);
+}
+.pay-input:placeholder-shown {
+	color: #535351;
+}
+
+.search-input::before {
+	content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAQJJREFUKBWVkr2uQUEUhf3ET6GRaC5aFRoJKrf1BKpb8SwqovYGXkCj00k0QnRKEYkILYobvpUYmeMMyVnJl7P3mjN7Zu9zwiGv2qRFyMMSRrAFp6JPN8XzBj+wgDkUYAg7WINTYdwpDECxrRLJHeq2accdkgm8bzTvNAg2EDOGeUYI1KNO1gkuzTA1g8T7ojbn4ONQWPuHPWgeHmnzCqoe15tkSNPgPEAn68oVcOmA2XMtGK9FoE/VhOTTVNExqLCGZnxCv2pYauEC6lF0oQxX6IOvb7yX9NPEQafan+aPXDdQC18LsO6Tip5BBY6gIQaSbnMCFRCBZRcIvFkbsvCr4AFGOCxQy+JdGQAAAABJRU5ErkJggg==');
+	position: absolute;
+	width: 20px;
+	z-index: 3;
+	height: 30px;
+	font-size: 20px;
+	line-height: 39px;
+	height: 40px;
+	color: #8a701c;
+	background-color: #fa0;
+}
+
+.search-input > input {
+	width: 100%;
+	font-size: 20px;
+	background-color: rgb(12, 12, 12);
+	border-radius: 30px;
+	padding-left: 20px;
+	height: 40px;
+	border-color: rgb(185, 144, 7);
+	color: rgb(102, 73, 38);
+}
+
+.search-input > input:focus {
+	background-color: black;
+	color: #fa0;
+	outline: solid 2px rgb(94, 87, 2);
+}
+
+.search-input:hover {
+	box-shadow: 0 0 25px rgba(250, 155, 13, 0.788);
+}
+.search-input:placeholder-shown {
+	color: #424204;
+}
+
+#pay-button {
+	background-image: linear-gradient(135deg, #ebd15f, #fa0);
+	width: 20%;
+	height: 40px;
+	border-radius: 30px;
+	color: rgb(10, 10, 10);
+}
+#pay-button:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+
+.pay-text {
+	color: #ebd15f;
+}
+
+.pay-money {
+	color: beige;
+}
+
+.pay-info-input {
+	width: 60%;
+	font-size: 20px;
+	background-color: black;
+	border-radius: 30px;
+	padding-left: 20px;
+	padding-right: 20%;
+	height: 35px;
+	border-color: darkgoldenrod;
+	color: antiquewhite;
+}
+.pay-info-input:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+.pay-info-input:placeholder-shown {
+	color: #535351;
+}
+.has-text-right {
+	color: rgb(255, 255, 255);
+}
+.pay-info-button {
+	background-image: linear-gradient(135deg, #ebd15f, #fa0);
+	width: 100%;
+	height: 30px;
+	border-radius: 10px;
+	color: rgb(10, 10, 10);
+}
+.pay-info-button:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+.pay-info-button-add {
+	background-image: linear-gradient(135deg, #ebd15f, #fa0);
+	width: 80px;
+	height: 30px;
+	border-radius: 10px;
+	color: rgb(10, 10, 10);
+}
+.pay-info-button-add:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+.text-white {
+	color: rgb(255, 255, 255);
+}
+#white {
+	color: rgb(255, 255, 255);
+}
+#pad-info-a {
+	color: #fa0;
+}
+#pay-info-input-owner {
+	width: 100%;
+	font-size: 20px;
+	background-color: black;
+	border-radius: 30px;
+	padding-left: 5px;
+	padding-right: 5px;
+	height: 40px;
+	border: solid 2px darkgoldenrod;
+	color: antiquewhite;
+}
+#pay-info-input-owner:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+#pay-info-input-owner:placeholder-shown {
+	color: #535351;
+}
+
+.pay-info-action-button {
+	outline: solid 1px darkgoldenrod;
+}
+.pay-info-action-button:hover {
+	background-color: rgb(204, 119, 8);
+	color: rgb(10, 10, 10);
+}
+.info-list {
+	width: 100%;
+	font-size: 13px;
+	background-color: black;
+	border-radius: 3px;
+	height: 300px;
+	outline: solid 2px rgb(204, 119, 8);
+}
+.info-list-item {
+	border-color: #fa0;
+	color: rgb(11, 12, 12);
+}
+.py-5 {
+	padding: 5%;
+}
+.float-left {
+	float: left;
+}
+.float-right {
+	float: right;
+}
+.info-progressbar {
+	margin-top: 10px;
+}
+.pad-checkbox {
+	margin: 5px;
+}
+.custom {
+	margin-top: -3px !important;
+}
+.pad-checkbox-sm {
+	height: 15px;
+	width: 15px;
+}
+.divider {
+	justify-content: center;
+	margin: 8px 0;
+	position: relative;
+	width: 100%;
+}
+.flex-column {
+	flex-direction: column;
+}
+
+.divider {
+	justify-content: center;
+	margin: 8px 0;
+	position: relative;
+	width: 100%;
+}
+.flex-column {
+	flex-direction: column;
+}
+.flex {
+	display: flex;
+	flex-direction: row;
+}
+
+.divider:before {
+	background-color: #ebd15f;
+	border-radius: 2px;
+	content: "";
+	height: 2px;
+	position: absolute;
+	width: 100%;
+}
+.rounded-md {
+	background-color: #ebd15f;
+	border-radius: 1px;
+	padding: 5px;
+	color: black;
+}
+.info-list-state {
+	margin-top: 90px;
+}

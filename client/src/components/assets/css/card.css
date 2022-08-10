@@ -1,0 +1,195 @@
+.card {
+	box-shadow: 0 0 15px rgba(196, 133, 8, 0.788);
+	outline: solid 2px rgb(231, 158, 10);
+	padding: 10px;
+	border-radius: 10px;
+	width: 250px;
+	height: 460px;
+	margin-top: 30px;
+	padding-top: 20px;
+	/* color: #eeeeee; */
+}
+.card:hover {
+	box-shadow: 0 0 20px rgba(211, 209, 206, 0.788);
+	transform: scale(1.05, 1.05); /* Equal to scaleX(2) scaleY(0.5) */
+}
+.card-fair {
+	box-shadow: 0 0 15px rgba(160, 150, 128, 0.788);
+	outline: solid 2px rgb(170, 152, 116);
+	padding: 10px;
+	border-radius: 10px;
+	width: 250px;
+	height: 460px;
+	margin-top: 30px;
+	padding-top: 20px;
+	/* color: #eeeeee; */
+}
+.card-fair:hover {
+	box-shadow: 0 0 20px rgba(211, 209, 206, 0.788);
+	transform: scale(1.05, 1.05); /* Equal to scaleX(2) scaleY(0.5) */
+}
+.card-fair-title {
+	margin: 0, 0, 0, -50px;
+	padding: 0, 0, 0, 0;
+	color: #fa0;
+}
+.title {
+	color: #fa0;
+	border-bottom: solid 2px rgba(253, 251, 248, 0.83);
+}
+.subtitle {
+	color: rgb(153, 151, 151);
+}
+.soft-hard-cap {
+	color: rgb(255, 255, 254);
+	margin-top: 10px;
+}
+.card-btn {
+	background-image: linear-gradient(135deg, #ebd15f, #fa0);
+	width: 170px;
+	height: 25px;
+	border-radius: 10px;
+	color: rgb(10, 10, 10);
+	margin-top: 5px;
+}
+
+.card-btn:hover {
+	box-shadow: 0 0 10px rgba(255, 170, 0, 0.788);
+}
+
+.containers-card {
+	align-items: center !important;
+	justify-content: center;
+}
+
+.card-whitelist-text {
+	float: left;
+	font-size: 12px;
+	outline: solid 1px rgb(231, 158, 10);
+	border-radius: 5px;
+	padding: 3px;
+	margin: 3px;
+	background-color: rgba(125, 88, 14, 0.535);
+}
+
+.card-audit-text {
+	float: left;
+	font-size: 12px;
+	outline: solid 1px rgb(96, 1, 248);
+	border-radius: 5px;
+	padding: 3px;
+	margin: 3px;
+	background-color: rgba(96, 1, 248, 0.535);
+}
+.card-kyc-text {
+	float: left;
+	font-size: 12px;
+	outline: solid 1px rgb(243, 74, 2);
+	border-radius: 5px;
+	padding: 3px;
+	margin: 3px;
+	background-color: rgba(243, 74, 2, 0.535);
+}
+.card-safu-text {
+	float: left;
+	font-size: 12px;
+	outline: solid 1px rgb(166, 247, 5);
+	border-radius: 5px;
+	padding: 3px;
+	margin: 3px;
+	background-color: rgba(166, 247, 5, 0.535);
+}
+.card-privateSale-text {
+	float: left;
+	font-size: 12px;
+	outline: solid 1px rgb(5, 231, 247);
+	border-radius: 5px;
+	padding: 3px;
+	margin: 3px;
+	background-color: rgba(5, 247, 247, 0.535);
+}
+.card-premium-text {
+	float: left;
+	font-size: 12px;
+	outline: solid 1px rgb(5, 82, 247);
+	border-radius: 5px;
+	padding: 3px;
+	margin: 3px;
+	background-color: rgba(5, 21, 247, 0.535);
+}
+.info-panel-title {
+	font-size: 30px;
+	color: rgb(189, 128, 8);
+}
+.card-limit-time {
+	color: #fbcd01;
+	border-bottom: solid 1px rgb(231, 158, 10);
+}
+.endTime-font {
+	font-size: 13px;
+}
+.card-alarm-button {
+	background-color: rgba(125, 88, 14, 0.548);
+	border: solid 1px rgb(255, 255, 254);
+	border-radius: 5px;
+	padding: 5px;
+	padding-top: 6px;
+	position: absolute;
+	bottom: 10px;
+	left: 200px;
+}
+.card-alarm-button:hover {
+	box-shadow: 0 0 15px rgba(245, 244, 242, 0.788);
+}
+.card-alarm-back-button {
+	float: left;
+	background-color: rgba(125, 88, 14, 0);
+	border: solid 1px rgb(255, 255, 254);
+	border-radius: 5px;
+	margin-top: 5px;
+	padding: 3px;
+}
+.card-alarm-back-button:hover {
+	box-shadow: 0 0 15px rgba(245, 244, 242, 0.788);
+}
+.card-btn-min {
+	background-color: rgba(41, 32, 15, 0.363);
+	border: solid 1px rgb(255, 255, 254);
+	padding: 5px;
+	width: 25%;
+	margin: 5px;
+	border-radius: 5px;
+}
+.card-btn-min:hover {
+	box-shadow: 0 0 15px rgba(245, 244, 242, 0.788);
+}
+.card-btn-min.active {
+	background-color: rgba(255, 170, 0, 0.911);
+	border: solid 1px rgb(255, 255, 254);
+	color: rgb(252, 245, 245);
+	padding: 5px;
+	box-shadow: 0 0 15px rgba(245, 244, 242, 0.788);
+	margin: 5px;
+	border-radius: 5px;
+}
+.card-btn-start {
+	background-color: rgba(41, 32, 15, 0.363);
+	border: solid 1px rgb(255, 255, 254);
+	width: 40%;
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+}
+.card-btn-start.active {
+	background-color: rgba(250, 164, 6, 0.363);
+	border: solid 1px rgb(255, 255, 254);
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+}
+.card-btn-start:hover {
+	box-shadow: 0 0 15px rgba(245, 244, 242, 0.788);
+}
+.card-btn-min.active {
+	background-color: rgba(122, 83, 6, 0.788);
+}

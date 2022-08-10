@@ -1,0 +1,26 @@
+.db-button {
+	background-image: linear-gradient(135deg, #daa520, rgb(196, 139, 27));
+	width: 160px;
+	height: 40px;
+	border-radius: 15px !important;
+	color: #fff !important;
+	font-size: 18px !important;
+}
+.db-button:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+.db-button-color {
+	background-image: linear-gradient(135deg, #975d11, rgb(126, 89, 15));
+	width: 160px;
+	height: 40px;
+	border-radius: 15px !important;
+	color: rgb(255, 255, 255) !important;
+	font-size: 18px !important;
+}
+.db-button-color:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+.card-dashboard {
+	/* height: 400px; */
+	margin: 5%;
+}
