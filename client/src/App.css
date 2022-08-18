@@ -8,7 +8,15 @@
 @import url(./components/assets/css/auth.css);
 .App {
 	text-align: center;
-	background-color: #000000;
+	background-image: url('./components/assets/img/back/bg-1.png');
+	width: 100%;
+	height: auto;
+	min-height: 100vh;
+	font-family: 'Rajdhani';
+}
+
+.dark-overly {
+	background: #000000B3 0% 0% no-repeat padding-box;
 	height: 100%;
 	min-height: 100vh;
 }
@@ -32,12 +40,19 @@
 		transform: rotate(360deg);
 	}
 }
-
+p {
+	font-family: 'Rajdhani';
+}
 .main {
 	padding-top: 90px;
 	color: rgb(255, 255, 255);
 }
 
 .footer {
-	background-color: #282c34;
+	background-color: #282c3400 !important;
 }
+@font-face {
+	font-family: "Rajdhani";
+	src: url("components/assets/font/Rajdhani-Medium.ttf");
+}
+/*Have a Nice Day!!! :)*/

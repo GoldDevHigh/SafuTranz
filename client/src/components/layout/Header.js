@@ -265,6 +265,7 @@ function Header(chainId) {
 					</Navbar.Items>
 				</Navbar.Wrapper>
 			)}
+
 			<Sider screen={isMobile} togglettt={togglerr} />
 		</Styles.Wrapper>
 	);

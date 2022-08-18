@@ -110,7 +110,8 @@ router.post('/setAuthSetting', (req, res) => {
 		auditState: req.body.auditState,
 		safuState: req.body.safuState,
 		premium: req.body.premium,
-		privateSale: req.body.privateSale
+		privateSale: req.body.privateSale,
+		advertise: req.body.advertise
 	};
 
 	Address.findOneAndUpdate({ launchpadAddress: req.body.presaleAddress }, { $set: data }, { new: true })
@@ -146,6 +147,8 @@ router.post('/addPresaleAddress', (req, res) => {
 	updateAddress.instagram = req.body.instagram;
 	updateAddress.discord = req.body.discord;
 	updateAddress.reddit = req.body.reddit;
+	updateAddress.youtube = req.body.youtube;
+	updateAddress.bannel = req.body.bannel;
 	updateAddress.description = req.body.description;
 	updateAddress.whiteListState = req.body.whiteListState;
 	updateAddress.pancakeswapLiquidity = req.body.pancakeswapLiquidity;

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import isEmpty from '../../validation/isEmpty';
-import { IconButton, ButtonToolbar, Checkbox } from 'rsuite';
+import { IconButton, ButtonToolbar, Checkbox, Col, Row } from 'rsuite';
 import PauseIcon from '@rsuite/icons/PagePrevious';
 import PlayIcon from '@rsuite/icons/PageNext';
 import { setWhiteListData, setReduxValue } from '../../actions/padActions';
 import PropTypes from 'prop-types';
+import lunchpadImg from '../assets/img/back/Spaceship_08-removebg-preview@2x.png';
+import { BsFillPatchCheckFill } from 'react-icons/bs';
 
 var valNetState = '';
 class LaunchPad2 extends Component {
@@ -226,271 +228,336 @@ class LaunchPad2 extends Component {
 						<div style={{ height: '16px' }} />
 						<div className="bg-dark style-border  ant-card ant-card-bordered">
 							<div className="ant-card-body">
-								<h1 className="socials text-center" style={{ fontSize: '40px' }}>
-									Launchpad Info
-								</h1>
-								<p className="lead text-center" style={{ marginTop: '40px', fontSize: '20px' }}>
-									<i>
-										Enter the launchpad information that you want to raise , that should be enter
-										all details about your presale
-									</i>
-								</p>
-
-								<form>
-									<div className="field">
-										<label className="launch-label" htmlFor="presaleRate">
-											Presale rate
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.presaleRate
-												})}
-												type="number"
-												placeholder="100"
-												id="tokenAddress"
-												name="presaleRate"
-												autoComplete="on"
-												value={this.state.presaleRate}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">{this.state.formErrors.presaleRate}</div>
-
-											<p className="help">
-												If I spend 1 {valNetState} how many tokens will I receive?
+								<div className="lead2" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
+									<Row>
+										<Col md={12} xs={24}>
+											<h1
+												className=" text-center"
+												style={{ fontSize: '40px', marginTop: '10px' }}
+											>
+												VERIFY TOKEN{' '}
+												<BsFillPatchCheckFill
+													style={{
+														marginBottom: '20px',
+														marginLeft: '-10px',
+														height: '20px',
+														width: '20px',
+														color: '#0F3CB2'
+													}}
+												/>
+											</h1>
+											<p className="text-center socials" style={{ fontSize: '20px' }}>
+												Ensure you fill all the fields below
 											</p>
-										</div>
-									</div>
-
-									<div className="field">
-										<label className="launch-label" htmlFor="softCap">
-											Softcap ({valNetState})
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.softCap
-												})}
-												type="number"
-												placeholder="Ex: 10"
-												id="tokenAddress"
-												name="softCap"
-												autoComplete="on"
-												value={this.state.softCap}
-												onChange={(event) => this.handleInput(event)}
+											<h4>Step 2</h4>
+										</Col>
+										<Col md={12} xs={24}>
+											<img
+												src={lunchpadImg}
+												alt="launchpad image"
+												style={{ width: '150px', height: '150px' }}
 											/>
-											<div className="invalid-feedback">{this.state.formErrors.softCap}</div>
-											<p className="help">Softcap must be &gt;= 40% of Hardcap!</p>
-										</div>
-									</div>
+										</Col>
+									</Row>
+								</div>
+								<div className="lead2" style={{ marginTop: '100px' }}>
+									<form>
+										<Row>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label className="has-text-left">Presale rate *</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.presaleRate
+															})}
+															type="number"
+															placeholder="100"
+															id="tokenAddress"
+															name="presaleRate"
+															autoComplete="on"
+															value={this.state.presaleRate}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.presaleRate}
+														</div>
 
-									<div className="field">
-										<label className="launch-label" htmlFor="hardCap">
-											HardCap ({valNetState})
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.hardCap
-												})}
-												type="number"
-												placeholder="Ex: 10"
-												id="tokenAddress"
-												name="hardCap"
-												autoComplete="on"
-												value={this.state.hardCap}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">{this.state.formErrors.hardCap}</div>
+														<p className="help">
+															If I spend 1 {valNetState} how many tokens will I receive?
+														</p>
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label>Whitelist *</label>
+													<div className="control">
+														<div className="checkbox-input has-text-left">
+															<input
+																type="checkbox"
+																name="checkbox"
+																id="checkboxInput"
+																defaultChecked={this.state.isChecked}
+																onChange={this.changeWhitelise}
+															/>
+															<span class="checkmark" />
+														</div>
+														<p className="help">Leave untick if not whitelist</p>
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="softCap">Softcap ({valNetState})*</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.softCap
+															})}
+															type="number"
+															placeholder="Ex: 10"
+															id="tokenAddress"
+															name="softCap"
+															autoComplete="on"
+															value={this.state.softCap}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.softCap}
+														</div>
+														<p className="help">Softcap must be &gt;= 40% of Hardcap!</p>
+													</div>
+												</div>
+											</Col>
+										</Row>
+										<Row style={{ marginTop: '50px' }}>
+											<Col xs={24} md={8}>
+												<div className="field">
+													<label htmlFor="hardCap">HardCap ({valNetState})*</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.hardCap
+															})}
+															type="number"
+															placeholder="Ex: 10"
+															id="tokenAddress"
+															name="hardCap"
+															autoComplete="on"
+															value={this.state.hardCap}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.hardCap}
+														</div>
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="minBuy">Minimum buy ({valNetState})*</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.minBuy
+															})}
+															type="number"
+															placeholder={valNetState}
+															id="tokenAddress"
+															name="minBuy"
+															autoComplete="on"
+															value={this.state.minBuy}
+															onChange={(event) => this.handleInput(event)}
+														/>
+													</div>
+													<div className="invalid-feedback">
+														{this.state.formErrors.minBuy}
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="maxBuy">Maximum buy ({valNetState})*</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.maxBuy
+															})}
+															type="number"
+															placeholder={valNetState}
+															id="tokenAddress"
+															name="maxBuy"
+															autoComplete="on"
+															value={this.state.maxBuy}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.maxBuy}
+														</div>
+													</div>
+												</div>
+											</Col>
+										</Row>
+										<Row style={{ marginTop: '50px' }}>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="pancakeswapLiquidity">Liquidity (%)*</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.pancakeswapLiquidity
+															})}
+															type="number"
+															placeholder="Ex:10"
+															id="tokenAddress"
+															name="pancakeswapLiquidity"
+															autoComplete="on"
+															value={this.state.pancakeswapLiquidity}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.pancakeswapLiquidity}
+														</div>
+														<p className="help">
+															Liquidity must be equal to or greater than 40%
+														</p>
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label>Auto Add Liquidity *</label>
+													<div className="control">
+														<div className="checkbox-input has-text-left">
+															<input
+																type="checkbox"
+																name="checkbox"
+																id="checkboxInput"
+																defaultChecked={this.state.isChecked}
+																onChange={this.changeWhitelise}
+																className="has-text-left"
+															/>
+														</div>
+														<p className="help">
+															This will automatic create liquidity after presale as been
+															finalize
+														</p>
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="pancakeswapRate">Swap Listing Rate*</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.pancakeswapRate
+															})}
+															type="number"
+															placeholder="Ex:10"
+															id="tokenAddress"
+															name="pancakeswapRate"
+															autoComplete="on"
+															value={this.state.pancakeswapRate}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.pancakeswapRate}
+														</div>
+													</div>
+												</div>
+											</Col>
+										</Row>
+										<Row style={{ marginTop: '50px' }}>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="startTime">Start time (Your Local Time)*</label>
+													<div>
+														<input
+															id="launch-month"
+															type="datetime-local"
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.from
+															})}
+															name="from"
+															value={this.state.from}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.from}
+														</div>
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="endTime">End time (Your Local Time)*</label>
+													<div>
+														<input
+															id="launch-month"
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.to
+															})}
+															name="to"
+															type="datetime-local"
+															value={this.state.to}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.to}
+														</div>
+													</div>
+												</div>
+											</Col>
+											<Col md={8} xs={24}>
+												<div className="field">
+													<label htmlFor="pancakeswapLockup">
+														Presale Token Lockup (minutes)*
+													</label>
+													<div className="control">
+														<input
+															className={classnames('form-control form-control-lg', {
+																'is-invalid': this.state.formErrors.pancakeswapLockup
+															})}
+															type="number"
+															placeholder="Ex:10"
+															id="tokenAddress"
+															name="pancakeswapLockup"
+															autoComplete="on"
+															value={this.state.pancakeswapLockup}
+															onChange={(event) => this.handleInput(event)}
+														/>
+														<div className="invalid-feedback">
+															{this.state.formErrors.pancakeswapLockup}
+														</div>
+													</div>
+												</div>
+											</Col>
+										</Row>
+										<div
+											className="has-text-centered"
+											style={{ marginTop: '100px', marginBottom: '50px' }}
+										>
+											<h4 style={{ marginBottom: '50px' }}>
+												Need {this.state.hardCap * this.state.presaleRate}{' '}
+												{window.localStorage.getItem('tokenSymbol')} to create launchpad.
+											</h4>
+											<ButtonToolbar>
+												<Link to={this.state.formValid ? '/LaunchPad3' : '#'}>
+													<button
+														disabled={!this.state.formValid}
+														placement="next"
+														className="launch-button"
+														onClick={this.nextPage}
+													>
+														<strong>Next</strong>
+													</button>
+												</Link>
+											</ButtonToolbar>
 										</div>
-									</div>
-
-									<div className="field">
-										<label className="launch-label" htmlFor="minBuy">
-											Minimum buy ({valNetState})
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.minBuy
-												})}
-												type="number"
-												placeholder={valNetState}
-												id="tokenAddress"
-												name="minBuy"
-												autoComplete="on"
-												value={this.state.minBuy}
-												onChange={(event) => this.handleInput(event)}
-											/>
-										</div>
-										<div className="invalid-feedback">{this.state.formErrors.minBuy}</div>
-									</div>
-
-									<div className="field">
-										<label className="launch-label" htmlFor="maxBuy">
-											Maximum buy ({valNetState})
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.maxBuy
-												})}
-												type="number"
-												placeholder={valNetState}
-												id="tokenAddress"
-												name="maxBuy"
-												autoComplete="on"
-												value={this.state.maxBuy}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">{this.state.formErrors.maxBuy}</div>
-										</div>
-									</div>
-
-									<div className="field">
-										<label className="launch-label" htmlFor="pancakeswapLiquidity">
-											Liquidity (%)
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.pancakeswapLiquidity
-												})}
-												type="number"
-												placeholder="Ex:10"
-												id="tokenAddress"
-												name="pancakeswapLiquidity"
-												autoComplete="on"
-												value={this.state.pancakeswapLiquidity}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">
-												{this.state.formErrors.pancakeswapLiquidity}
-											</div>
-											<p className="help">Liquidity must be equal to or greater than 40%</p>
-										</div>
-									</div>
-
-									<div className="field">
-										<label className="launch-label" htmlFor="pancakeswapRate">
-											Swap Listing Rate
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.pancakeswapRate
-												})}
-												type="number"
-												placeholder="Ex:10"
-												id="tokenAddress"
-												name="pancakeswapRate"
-												autoComplete="on"
-												value={this.state.pancakeswapRate}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">
-												{this.state.formErrors.pancakeswapRate}
-											</div>
-										</div>
-									</div>
-
-									<div className="field">
-										<label className="launch-label" htmlFor="pancakeswapLockup">
-											Presale Token Lockup (minutes)
-										</label>
-										<div className="control">
-											<input
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.pancakeswapLockup
-												})}
-												type="number"
-												placeholder="Ex:10"
-												id="tokenAddress"
-												name="pancakeswapLockup"
-												autoComplete="on"
-												value={this.state.pancakeswapLockup}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">
-												{this.state.formErrors.pancakeswapLockup}
-											</div>
-										</div>
-									</div>
-
-									<Checkbox
-										className="launch-label"
-										style={{ marginTop: '70px', marginLeft: '-45%' }}
-										defaultChecked={this.state.isChecked}
-										onChange={this.changeWhitelise}
-									>
-										Whitelist
-									</Checkbox>
-
-									<div className="field" style={{ marginTop: '70px' }}>
-										<label className="launch-label" htmlFor="startTime">
-											Start time (Your Local Time)
-										</label>
-										<div>
-											<input
-												id="launch-month"
-												type="datetime-local"
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.from
-												})}
-												name="from"
-												value={this.state.from}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">{this.state.formErrors.from}</div>
-										</div>
-									</div>
-									<div className="field" style={{ marginTop: '70px' }}>
-										<label className="launch-label" htmlFor="endTime">
-											End time (Your Local Time)
-										</label>
-										<div>
-											<input
-												id="launch-month"
-												className={classnames('form-control form-control-lg', {
-													'is-invalid': this.state.formErrors.to
-												})}
-												name="to"
-												type="datetime-local"
-												value={this.state.to}
-												onChange={(event) => this.handleInput(event)}
-											/>
-											<div className="invalid-feedback">{this.state.formErrors.to}</div>
-										</div>
-									</div>
-									<div className="has-text-centered">
-										<div className="has-text-info p-4">
-											Need {this.state.hardCap * this.state.presaleRate}{' '}
-											{window.localStorage.getItem('tokenSymbol')} to create launchpad.
-										</div>
-										<ButtonToolbar>
-											<Link to="/LaunchPad1">
-												<IconButton
-													icon={<PauseIcon className="icon" />}
-													placement="left"
-													id="launch-tool-button"
-												>
-													<strong>Back</strong>
-												</IconButton>
-											</Link>
-											<Link to={this.state.formValid ? '/LaunchPad3' : '#'}>
-												<IconButton
-													disabled={!this.state.formValid}
-													icon={<PlayIcon className="icon" />}
-													placement="right"
-													id="launch-tool-button"
-													onClick={this.nextPage}
-												>
-													<strong>Next</strong>
-												</IconButton>
-											</Link>
-										</ButtonToolbar>
-									</div>
-								</form>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>

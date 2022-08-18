@@ -9,6 +9,9 @@ const AuthSchema = new Schema({
 	password: {
 		type: String
 	},
+	Authpassword: {
+		type: String
+	},
 
 	netFeeValueToken: {
 		BSC: {
@@ -92,6 +95,14 @@ const AuthSchema = new Schema({
 		type: Number,
 		default: 17
 	},
+
+	subcriberAddress: [
+		{
+			url: {
+				type: String
+			}
+		}
+	],
 
 	date: {
 		type: Date,

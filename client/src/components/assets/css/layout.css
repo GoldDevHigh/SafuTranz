@@ -8,6 +8,40 @@
 	color: rgb(253, 253, 253); /*will change color of text within the element */
 	text-align: center;
 }
+.marquee-1 {
+	/* border: solid 2px rgba(255, 170, 0, 0.788); */
+	height: 40px;
+	/* UI Properties */
+	background: #0f3cb2 0% 0% no-repeat padding-box;
+	border-radius: 20px;
+	opacity: 1;
+	position: static !important;
+	z-index: 1 !important;
+	font-size: 20px;
+}
+.marquee-tranding {
+	margin-top: -40px;
+	width: 130px;
+	height: 40px;
+	padding: 5px;
+	/* UI Properties */
+	background: #011751 0% 0% no-repeat padding-box;
+	border-radius: 14px;
+	opacity: 1;
+	font-size: 20px;
+	position: absolute;
+	z-index: 2;
+}
+.marquee-advertise {
+	margin-top: 50px;
+	font-size: 20px;
+	height: 40px;
+	/* UI Properties */
+	background: #000000 0% 0% no-repeat padding-box;
+	border: 0.5px solid #d48e02;
+	border-radius: 10px;
+	opacity: 1;
+}
 .nav-links-mobile {
 	margin-right: 1px !important;
 	border-radius: 5px !important;
@@ -23,9 +57,7 @@
 	box-shadow: 0 0 18px rgba(255, 170, 0, 0.788);
 	color: white; /*will change color of text within the element on hover */
 }
-.footer {
-	background-color: #000 !important;
-}
+
 #nav-drop {
 	margin-right: 20px;
 	border-radius: 5px;
@@ -60,7 +92,15 @@
 	color: white;
 	margin-top: 25px;
 }
-
+.tranding {
+	top: 66px;
+	left: 22px;
+	width: 1344px;
+	height: 40px;
+	background: #0f3cb2 0% 0% no-repeat padding-box;
+	border-radius: 20px;
+	opacity: 1;
+}
 .nav-logo {
 	display: inline-block;
 }
@@ -89,9 +129,7 @@
 }
 
 .lead {
-	background: #1e2127 0% 0% no-repeat padding-box;
-	border: 3px dashed #daa520;
-	opacity: 0.76;
+	background: #1e212700 0% 0% no-repeat padding-box;
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-top: 5%;
@@ -100,15 +138,64 @@
 	font: normal normal normal 15px/25px Arial;
 	letter-spacing: 0.98px;
 	color: #ffffff;
-	text-transform: capitalize;
+	/* text-transform: capitalize; */
+
+	background: #00000082 0% 0% no-repeat padding-box;
+	border: 1px solid #ffaa00;
+	border-radius: 53px;
+	opacity: 1;
+}
+.lead1 {
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	text-align: center;
+	letter-spacing: 0.98px;
+	color: #ffffff;
+	background: #000000 0% 0% no-repeat padding-box;
+	box-shadow: 0px 0px 8px #ffaa00;
+	border-radius: 18px;
+	opacity: 1;
+}
+.lead2 {
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	text-align: center;
+	letter-spacing: 0.98px;
+	color: #ffffff;
+	background: #000000 0% 0% no-repeat padding-box;
+	box-shadow: 0px 0px 8px #ffaa00;
+	border-radius: 30px;
+	opacity: 1;
+}
+.lead3 {
+	text-align: center;
+	letter-spacing: 0.98px;
+	color: #ffffff;
+	background: #000000 0% 0% no-repeat padding-box;
+	border: solid 2px rgba(255, 170, 0, 0.788);
+	box-shadow: 0px 0px 8px #ffaa00;
+	border-radius: 30px;
 	opacity: 1;
 }
 
 .dash-title {
 	text-align: center;
 	font: normal normal 900 25px Arial;
-	letter-spacing: 0.7px;
 	opacity: 1;
+}
+.footer-btn {
+	margin-top: 20px;
+	margin-bottom: 90px;
+	width: 250px;
+	height: 30px;
+	color: #ffffff;
+	background: #00000000 0% 0% no-repeat padding-box;
+	box-shadow: 0px 0px 8px #ffaa00;
+	border-radius: 18px;
 }
 
 @media screen and (max-width: 768px) {
@@ -181,7 +268,7 @@
 }
 .help {
 	display: block;
-	font-size: .75rem;
+	font-size: 1.5rem;
 	margin-top: .25rem;
 }
 
@@ -271,21 +358,6 @@ a.has-text-primary-dark:hover {
 	font-size: .75rem !important;
 }
 
-.ant-card-body h2,
-.ant-checkbox-wrapper,
-.ant-modal-close,
-.ant-modal-title,
-.ant-radio-wrapper,
-.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title,
-.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title,
-.button.is-loading {
-	color: var(--main-text-color);
-}
-
-.ant-card-body {
-	padding: 24px;
-}
-
 .ant-card-contain-grid:not(.ant-card-loading) .ant-card-body {
 	margin: -1px 0 0 -1px;
 	padding: 0;
@@ -367,11 +439,6 @@ a.has-text-primary-dark:hover {
 	color: rgba(0, 0, 0, .85);
 	font-size: 14px;
 	background: #f0f2f5;
-}
-
-.ant-layout-content {
-	flex: auto;
-	min-height: 0;
 }
 
 .ant-layout-sider {
@@ -513,7 +580,6 @@ a.has-text-primary-dark:hover {
 
 .socials {
 	color: #ebd15f;
-	padding: 5px;
 }
 
 .addresses {

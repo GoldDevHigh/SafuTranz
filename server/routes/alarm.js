@@ -73,4 +73,41 @@ router.post('/data', (req, res) => {
 		.catch((err) => res.status(404).json(err));
 });
 
+// @route ---> POST api/alarm/register
+// @desc  ---> Register alarm data
+// @access --> Public
+router.post('/addFavorite', (req, res) => {
+	var favorite = {
+		userAddress: req.body.userAddress,
+		favorite: req.body.favorite
+	};
+
+	Alarm.findOne({ userAddress: req.body.userAddress })
+		.then((data) => {
+			if (data) {
+				var favorite = data.favorite.find((value) => value.tokenAddress === req.body.tokenAddress);
+				if (favorite) {
+					var dt = data.favorite.map((value) => {
+						if (value.tokenAddress === req.body.tokenAddress) {
+							if (req.body.favorite !== undefined) value.favorite = req.body.favorite;
+						}
+						return value;
+					});
+					data.favorite = dt;
+				} else {
+					data.favorite.push(favorite);
+				}
+				data.save().then().catch((e) => console.log(e));
+			} else {
+				const newAlarm = new Alarm({
+					userAddress: req.body.userAddress,
+					favorite: favorite
+				});
+				newAlarm.save().then((data) => console.log(data)).catch((err) => res.status(404).json(err));
+			}
+			res.json(data);
+		})
+		.catch((err) => res.status(404).json(err));
+});
+
 module.exports = router;

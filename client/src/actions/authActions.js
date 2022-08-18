@@ -11,44 +11,92 @@ import {
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode';
+import { adminAddress, authAddress } from '../config';
 
 export const registerUser = (userData) => (dispatch) => {
-	axios
-		.post('/api/auth/register', userData)
-		.then((res) => {
-			dispatch({ type: GET_SUCCESS, payload: {} });
-			alert('Password Change Successfully');
-		})
-		.catch((err) =>
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.response.data
+	if (Number(localStorage.getItem('userAddress')) === Number(authAddress)) {
+		axios
+			.post('/api/auth/register', userData)
+			.then((res) => {
+				dispatch({ type: GET_SUCCESS, payload: {} });
+				alert('Password Change Successfully');
 			})
-		);
+			.catch((err) =>
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				})
+			);
+	}
+	// else {
+	if (Number(localStorage.getItem('userAddress')) === Number(adminAddress)) {
+		axios
+			.post('/api/auth/Authregister', userData)
+			.then((res) => {
+				dispatch({ type: GET_SUCCESS, payload: {} });
+				alert('Password Change Successfully');
+			})
+			.catch((err) =>
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				})
+			);
+	}
 };
+
 export const userLogin = (userData) => (dispatch) => {
-	axios
-		.post('/api/auth/login', userData)
-		.then((res) => {
-			// Store Token into localstorage
-			const { token } = res.data;
-			localStorage.setItem('jwtToken', token);
+	if (Number(localStorage.getItem('userAddress')) === Number(authAddress)) {
+		axios
+			.post('/api/auth/login', userData)
+			.then((res) => {
+				// Store Token into localstorage
+				const { token } = res.data;
+				localStorage.setItem('jwtToken', token);
 
-			// Set Authorization
-			setAuthToken(token);
+				// Set Authorization
+				setAuthToken(token);
 
-			// Decode Token
-			const decoded = jwtDecode(token);
+				// Decode Token
+				const decoded = jwtDecode(token);
 
-			// Set Current User
-			dispatch(setCurrentUser(decoded));
-		})
-		.catch((err) =>
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.response.data
+				// Set Current User
+				dispatch(setCurrentUser(decoded));
 			})
-		);
+			.catch((err) =>
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				})
+			);
+		// } else {
+	}
+	if (Number(localStorage.getItem('userAddress')) === Number(adminAddress)) {
+		console.log('asdfasdfasdfasdf');
+		axios
+			.post('/api/auth/Authlogin', userData)
+			.then((res) => {
+				console.log('ttttttttttttttttttttt');
+				// Store Token into localstorage
+				const { token } = res.data;
+				localStorage.setItem('jwtToken', token);
+
+				// Set Authorization
+				setAuthToken(token);
+
+				// Decode Token
+				const decoded = jwtDecode(token);
+
+				// Set Current User
+				dispatch(setCurrentUser(decoded));
+			})
+			.catch((err) =>
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				})
+			);
+	}
 };
 
 export const setCurrentUser = (decoded) => {
@@ -69,6 +117,7 @@ export const logoutUser = () => (dispatch) => {
 		payload: {}
 	});
 };
+
 export const setEscrowAddress = (escorwData) => (dispatch) => {
 	axios.post('/api/auth/escrow', escorwData).then(alert('Escrow Address Set Successfully')).catch((err) =>
 		dispatch({

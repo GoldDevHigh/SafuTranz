@@ -54,6 +54,12 @@ const AddressSchema = new Schema({
 	reddit: {
 		type: String
 	},
+	youtube: {
+		type: String
+	},
+	bannel: {
+		type: String
+	},
 	description: {
 		type: String
 	},
@@ -154,6 +160,10 @@ const AddressSchema = new Schema({
 		default: Date.now
 	},
 	FairState: {
+		type: Boolean,
+		default: false
+	},
+	advertise: {
 		type: Boolean,
 		default: false
 	},

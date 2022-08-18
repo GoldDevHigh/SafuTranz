@@ -91,6 +91,8 @@ export const getPads = () => (dispatch) => {
 						padData.kycState = filteredDats[i].kycState;
 						padData.auditState = filteredDats[i].auditState;
 						padData.privateSale = filteredDats[i].privateSale;
+						padData.favorite = filteredDats[i].favorite;
+						padData.advertise = filteredDats[i].advertise;
 						padData.premium = filteredDats[i].premium;
 						padData.presaleState = filteredDats[i].presaleState;
 						padData.pancakeswapLiquidity = filteredDats[i].pancakeswapLiquidity;
@@ -204,6 +206,8 @@ export const getAllData = () => (dispatch) => {
 					padData.privateSale = filteredDats[i].privateSale;
 					padData.premium = filteredDats[i].premium;
 					padData.presaleState = filteredDats[i].presaleState;
+					padData.favorite = filteredDats[i].favorite;
+					padData.advertise = filteredDats[i].advertise;
 					padData.pancakeswapLiquidity = filteredDats[i].pancakeswapLiquidity;
 					padData.pancakeswapRate = filteredDats[i].pancakeswapRate;
 					padData.pancakeswapLockup = filteredDats[i].pancakeswapLockup;

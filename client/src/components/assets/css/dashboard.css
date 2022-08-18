@@ -1,26 +1,130 @@
 .db-button {
-	background-image: linear-gradient(135deg, #daa520, rgb(196, 139, 27));
-	width: 160px;
+	width: 120px;
 	height: 40px;
-	border-radius: 15px !important;
-	color: #fff !important;
-	font-size: 18px !important;
+	/* UI Properties */
+	background-color: #00000000 !important;
+	box-shadow: 0px 2px 2px #d48e02;
+	border: 0.5px solid #D48E0287 !important;
+	border-radius: 33px !important;
+	color: white !important;
 }
 .db-button:hover {
 	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
 }
 .db-button-color {
-	background-image: linear-gradient(135deg, #975d11, rgb(126, 89, 15));
 	width: 160px;
 	height: 40px;
-	border-radius: 15px !important;
-	color: rgb(255, 255, 255) !important;
-	font-size: 18px !important;
+	/* UI Properties */
+	background-color: #00000000 !important;
+	box-shadow: 0px 2px 2px #d48e02;
+	border: 0.5px solid #D48E0287 !important;
+	border-radius: 33px !important;
+	color: white !important;
 }
 .db-button-color:hover {
+	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
+}
+.db-button-color1 {
+	width: 160px;
+	height: 40px;
+	/* UI Properties */
+	background: #5a3c02 0% 0% no-repeat padding-box !important;
+	box-shadow: 0px 2px 2px #d48e02;
+	border: 0.5px solid #D48E0287 !important;
+	border-radius: 33px !important;
+	color: white !important;
+}
+.db-button-color1:hover {
 	box-shadow: 0 0 15px rgba(255, 170, 0, 0.788);
 }
 .card-dashboard {
 	/* height: 400px; */
 	margin: 5%;
+}
+.dashboard-img1 {
+	width: 80%;
+	height: 80%;
+	/* UI Properties */
+	opacity: 1;
+}
+.dashboard-wave {
+	height: 96px;
+	width: 100%;
+	background: transparent url('../img/back/wavesNegative.svg') 0% 0% no-repeat padding-box;
+}
+.title-safu-sub {
+	font: normal normal medium 70px/19px Rajdhani;
+	font-size: 70px;
+	color: #ffaa00;
+	opacity: 1;
+}
+.icon-img {
+	width: 130px;
+	height: 130px;
+}
+.dashboard-bottom1 {
+	height: 69px;
+	width: 100%;
+	/* UI Properties */
+	background: transparent url('../img/back/waves\ \(1\).svg') 0% 0% no-repeat padding-box;
+	opacity: 1;
+}
+.dashboardimg2 {
+	width: 80%;
+	height: 80%;
+}
+.dash2 {
+	padding: 20%;
+}
+.dashboard-bottom2 {
+	height: 70px;
+	width: 100%;
+	transform: matrix(-1, 0, 0, -1, 0, 0);
+	/* UI Properties */
+	background: transparent url('../img/back/waves\ \(1\).svg') 0% 0% no-repeat padding-box;
+	opacity: 1;
+}
+.dashboard2-title {
+	height: 30px;
+	margin-bottom: 50px;
+	/* UI Properties */
+
+	font: normal normal bold 35px Rajdhani;
+	color: #ffaa00;
+	opacity: 1;
+}
+.dashboard2-text {
+	/* UI Properties */
+	text-align: left;
+	left: 30px;
+	font: normal normal bold 20px Rajdhani;
+	opacity: 1;
+}
+.dashboard2-panel {
+	padding: 20%;
+}
+.dashboard-img3 {
+	margin-top: 10rem;
+	height: 30rem;
+	width: 50rem;
+	margin-bottom: 10rem;
+}
+.dasboard-img4 {
+	width: 50px;
+	height: 50px;
+	margin-bottom: 50px;
+}
+.dashboard-wave1 {
+	height: 96px;
+	background: transparent url('../img/back/wavesNegative-1.svg') 0% 0% no-repeat padding-box;
+	width: 100%;
+}
+.dashboard-bottom-title1 {
+	margin-top: 100px;
+	color: #ffaa00;
+}
+.dashbord-img-bottom {
+	width: 130px;
+	height: 130px;
+	margin: 10px;
 }

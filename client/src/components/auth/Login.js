@@ -40,8 +40,10 @@ export class Login extends Component {
 		const userData = {
 			password
 		};
+		console.log('login');
 		this.props.userLogin(userData);
 	};
+
 	render() {
 		const { errors } = this.state;
 		return (
@@ -66,7 +68,12 @@ export class Login extends Component {
 								/>
 							</div>
 						</div>
-						<input type="submit" className="launch-button" value="Login" style={{ marginTop: '80px' }} />
+						<input
+							type="submit"
+							className="launch-button"
+							value="Login"
+							style={{ marginTop: '80px', border: 'solid 2px darkgoldenrod' }}
+						/>
 					</form>
 				</div>
 			</div>

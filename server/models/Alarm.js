@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const AuthSchema = new Schema({
+const AlarmSchema = new Schema({
 	userAddress: {
 		type: String
 	},
@@ -45,10 +45,23 @@ const AuthSchema = new Schema({
 			}
 		}
 	],
+
+	favorite: [
+		{
+			tokenAddress: {
+				type: String
+			},
+			favorite: {
+				type: Boolean,
+				default: false
+			}
+		}
+	],
+
 	date: {
 		type: Date,
 		default: Date.now
 	}
 });
 
-module.exports = Auth = mongoose.model('alarms', AuthSchema);
+module.exports = Auth = mongoose.model('alarms', AlarmSchema);

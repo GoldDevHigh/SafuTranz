@@ -7,6 +7,8 @@ import { setAlaramData, getAlaramData } from '../../actions/alarmActions';
 import { FlexboxGrid, Col, Row } from 'rsuite';
 import SearchInput, { createFilter } from 'react-search-input';
 import Spinner from '../common/Spinner';
+import launchHeaderImg from '../assets/img/back/lauchpad-img.jfif';
+import roketImg from '../assets/img/back/roket.jpg';
 
 const KEYS_TO_FILTERS = [ 'title', 'symbol' ];
 var items = [];
@@ -29,8 +31,21 @@ class PadList extends Component {
 	}
 
 	onChange(e) {
-		this.setState({ ...this.state, [e.target.name]: e.target.checked });
+		if (e.target.value === 'All status') {
+			this.setState({
+				kycState: false,
+				adtState: false,
+				safuState: false,
+				prmState: false,
+				pvtState: false,
+				whiteListState: false,
+				currentState: false
+			});
+		} else {
+			this.setState({ [e.target.value]: true });
+		}
 	}
+
 	componentDidMount() {
 		window.scrollTo(0, 0);
 
@@ -56,12 +71,12 @@ class PadList extends Component {
 	render() {
 		const { pads, loading } = this.props.pad;
 		const { alarmData } = this.props.alarm;
-		const alarmValue = alarmData.data;
 		var buffer = [];
 		let postContent;
 
 		items = pads;
-		if (pads !== null || !loading || localStorage.getItem('userAddress') !== null) {
+		if (pads.length !== 0) {
+			const alarmValue = alarmData.data;
 			const filteredItems = items.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
 			if (
 				this.state.kycState ||
@@ -98,114 +113,58 @@ class PadList extends Component {
 		return (
 			<section className="pt-4">
 				<div className="pad-list-main">
-					<div className="bg-dark style-border p-4 p-lg-5  white-font rounded-3 text-center">
+					<img
+						src={launchHeaderImg}
+						alt="launch header image"
+						style={{ width: '60%', height: '20rem', borderRadius: '1rem' }}
+					/>
+					<div className="bg-dark p-4 p-lg-5  white-font rounded-3 text-center">
 						<div className="m-4 m-lg-5 ">
-							<h1 className="socials fw-bold" style={{ fontSize: '45px', marginBottom: '60px' }}>
-								Current Presale
-							</h1>
+							<div className="lead2">
+								<div
+									className=" fw-bold"
+									style={{ fontSize: '45px', marginBottom: '20px', marginTop: '100px' }}
+								>
+									CURRENT PRESALE
+								</div>
 
-							<p className="fs-4" style={{ fontSize: '20px' }}>
-								Presales are usually sold from a separate allocation of seats, which may not be the same
-								as the tickets being released to the general public.
-							</p>
-							<div className="input-group mb-3" style={{ marginTop: '50px', marginBottom: '30px' }}>
-								<Col sm={3} xs={8}>
-									<span className="pad-checkbox">
-										<input
-											type="checkbox"
-											name="whiteListState"
-											value={this.state.whiteListState}
-											onChange={this.onChange}
-											className="pad-checkbox-sm"
-										/>
-										<span class="custom">WHT</span>
-									</span>
-								</Col>
-								<Col sm={3} xs={8}>
-									<span className="pad-checkbox">
-										<input
-											type="checkbox"
-											name="kycState"
-											value={this.state.kycState}
-											onChange={this.onChange}
-											className="pad-checkbox-sm"
-										/>
-										<span class="custom">KYC</span>
-									</span>
-								</Col>
-								<Col sm={3} xs={8}>
-									<span className="pad-checkbox">
-										<input
-											type="checkbox"
-											name="adtState"
-											value={this.state.adtState}
-											onChange={this.onChange}
-											className="pad-checkbox-sm"
-										/>
-										<span class="custom">ADT</span>
-									</span>
-								</Col>
+								<p className="fs-4 socials" style={{ fontSize: '20px' }}>
+									Presale Are Usually Sold In A Separate Allocation Of Sit
+								</p>
 
-								<Col sm={3} xs={8} style={{ padding: '0px' }}>
-									<span className="pad-checkbox">
-										<input
-											type="checkbox"
-											name="safuState"
-											value={this.state.safuState}
-											onChange={this.onChange}
-											className="pad-checkbox-sm"
-										/>
-										<span class="custom">SAFU</span>
-									</span>
-								</Col>
-								<Col sm={3} xs={8}>
-									<span className="pad-checkbox">
-										<input
-											type="checkbox"
-											name="prmState"
-											value={this.state.prmState}
-											onChange={this.onChange}
-											className="pad-checkbox-sm"
-										/>
-										<span class="custom">PRM</span>
-									</span>
-								</Col>
-								<Col sm={3} xs={8}>
-									<span className="pad-checkbox">
-										<input
-											type="checkbox"
-											name="pvtState"
-											value={this.state.pvtState}
-											onChange={this.onChange}
-											className="pad-checkbox-sm"
-										/>
-										<span class="custom">PVT</span>
-									</span>
-								</Col>
-
-								<Col sm={6} xs={24}>
-									<span className="pad-checkbox">
-										<input
-											type="checkbox"
-											name="currentState"
-											value={this.state.currentState}
-											onChange={this.onChange}
-											className="pad-checkbox-sm"
-										/>
-										<span class="custom">My Contributions</span>
-									</span>
-								</Col>
-							</div>
-							<p className="fs-4" style={{ fontSize: '10px' }}>
-								{'-'}
-							</p>
-							<div className="input-group mb-3" style={{ marginTop: '10px', marginBottom: '40px' }}>
-								<SearchInput
-									className="search-input"
-									placeholder="Enter token name or token symbol."
-									value={this.state.searchTerm}
-									onChange={this.handleChange}
+								<img
+									src={roketImg}
+									alt="roket image"
+									style={{ width: '200px', height: '200px', marginTop: '60px' }}
 								/>
+							</div>
+
+							<div className="input-group mb-3" style={{ marginTop: '50px', marginBottom: '180px' }}>
+								<Row>
+									<Col md={14} xs={24}>
+										<SearchInput
+											className="search-input"
+											placeholder="Enter token name or token symbol."
+											value={this.state.searchTerm}
+											onChange={this.handleChange}
+										/>
+									</Col>
+									<Col md={6} xs={24}>
+										<button className="list-button-left">My Contribute</button>
+										<button className="list-button-right">My Favorite</button>
+									</Col>
+									<Col md={4} xs={24}>
+										<select id="state" className="padlist-select" onChange={this.onChange}>
+											<option value="All status">All Status</option>
+											<option value="kycState">KYC</option>
+											<option value="adtState">ADT</option>
+											<option value="whiteListState">WHT</option>
+											<option value="safuState">SAFU</option>
+											<option value="pvtState">PVT</option>
+											<option value="prmState">PRM</option>
+										</select>
+									</Col>
+								</Row>
 							</div>
 						</div>
 					</div>

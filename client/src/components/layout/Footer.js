@@ -4,16 +4,18 @@ import { FaGlobe, FaTwitter, FaTelegram } from 'react-icons/fa';
 
 const Footer = () => {
 	return (
-		<div className="footer flex text-center" style={{ backgorundColor: '#000' }}>
+		<div className="footer flex text-center">
 			<div
 				className="footer-wrapper container flex-column"
 				style={{
 					marginBottom: '0px',
-					marginTop: '0px',
+					marginTop: '100px',
 					paddingTop: '32px',
 					paddingBottom: '32px'
 				}}
 			>
+				<h4>Do Not Miss Any Presale Subscribe To Our Newsletter</h4>
+				<button className="footer-btn">SUBSCRIBE</button>
 				<div className="footer-logo flex-center" style={{ paddingBottom: '32px' }}>
 					<a href="https://safutrendz.com/">
 						<img src={Logo} className="photo" alt="logo" style={{ width: '120px', height: '120px' }} />

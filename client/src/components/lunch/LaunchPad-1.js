@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { getVerify } from '../../actions/verifyActions';
 import { getNetFeeValueLaunch } from '../../actions/authActions';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Web3 from 'web3';
-import { parse, stringify } from 'flatted';
 import axios from 'axios';
+import { Col, Row } from 'rsuite';
+import lunchpadImg from '../assets/img/back/Spaceship_08-removebg-preview@2x.png';
+import { BsFillPatchCheckFill } from 'react-icons/bs';
+import { RiErrorWarningFill } from 'react-icons/ri';
 
 var netValue = '';
 
@@ -215,24 +216,54 @@ class LaunchPad1 extends Component {
 
 							<div className="bg-dark  style-border ant-card ant-card-bordered">
 								<div className="ant-card-body">
-									<h1 className="socials text-center" style={{ fontSize: '40px' }}>
-										Verify Token
-									</h1>
-									<p className="lead text-center" style={{ marginTop: '50px', fontSize: '20px' }}>
-										<i>Enter the token address and verify</i>
-									</p>
-									<form style={{ marginTop: '80px' }}>
+									<div className="lead2" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
+										<Row>
+											<Col md={12} xs={24}>
+												<h1
+													className=" text-center"
+													style={{ fontSize: '40px', marginTop: '10px' }}
+												>
+													VERIFY TOKEN{' '}
+													<BsFillPatchCheckFill
+														style={{
+															marginBottom: '20px',
+															marginLeft: '-10px',
+															height: '20px',
+															width: '20px',
+															color: '#0F3CB2'
+														}}
+													/>
+												</h1>
+												<p className="text-center socials" style={{ fontSize: '20px' }}>
+													Get Started in 4 easy steps
+												</p>
+											</Col>
+											<Col md={12} xs={24}>
+												<img
+													src={lunchpadImg}
+													alt="launchpad image"
+													style={{ width: '150px', height: '150px' }}
+												/>
+											</Col>
+										</Row>
+									</div>
+									<form style={{ marginTop: '180px' }}>
 										<div className="field">
 											<div className="row is-flex is-align-items-center mb-2 flex-wrap">
-												<div className="is-flex-grow-1 mr-4">
-													<label
-														className="label"
-														htmlFor="tokenAddress"
-														style={{ fontSize: '20px' }}
+												<div className="is-flex-grow-1 mr-4" style={{ marginLeft: '10%' }}>
+													<div className="token-buffey">
+														<div>
+															<div style={{ fontSize: '23px', marginBottom: '20px' }}>
+																Enter The Token Address And Verify
+															</div>
+														</div>
+													</div>
+													<div
+														className="has-text-left"
+														style={{ fontSize: '18px', marginBottom: '20px' }}
 													>
-														Token address
-														<sup className="has-text-danger">*</sup>
-													</label>
+														Input Your Token Address*
+													</div>
 												</div>
 											</div>
 											<div className="form-group">
@@ -257,14 +288,17 @@ class LaunchPad1 extends Component {
 											<button
 												className="launch-button"
 												disabled={!this.state.formValid}
-												style={{ marginTop: '80px' }}
+												style={{ marginTop: '180px' }}
 												onClick={this.onSuccess}
 											>
-												<strong>Next</strong>
+												<strong>NEXT</strong>
 											</button>
 										</Link>
 
-										<p className="help is-info" style={{ fontSize: '18px', marginTop: '40px' }}>
+										<p
+											className="help is-info"
+											style={{ fontSize: '18px', marginTop: '40px', marginBottom: '20px' }}
+										>
 											Create pool fee: {netValue}
 										</p>
 									</form>
@@ -278,7 +312,7 @@ class LaunchPad1 extends Component {
 										<p style={{ fontSize: '18px' }}>
 											{this.state.formValid ? 'Token Decimals : ' + this.state.tokenDecimals : ''}
 										</p>
-										<p className="addresses" style={{ fontSize: '18px' }}>
+										<p className="addresses" style={{ fontSize: '18px', marginBottom: '70px' }}>
 											{this.state.formValid ? (
 												'Token Supply : ' +
 												this.state.tokenSupply / 10 ** this.state.tokenDecimals
@@ -286,6 +320,21 @@ class LaunchPad1 extends Component {
 												''
 											)}
 										</p>
+									</div>
+									<div className="launchbottom-text">
+										<RiErrorWarningFill
+											style={{
+												height: '30px',
+												width: '30px',
+												color: '#FF0000',
+												marginRight: '100px',
+												marginBottom: '-8px'
+											}}
+										/>
+										<span className="text-center">
+											Make sure your token has 'exclude transfer fee' function if it has transfer
+											fees
+										</span>
 									</div>
 								</div>
 							</div>

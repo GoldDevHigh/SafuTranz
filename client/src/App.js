@@ -13,6 +13,7 @@ import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 
 import Header from './components/layout/Header';
+import Header2 from './components/layout/Header2';
 import Footer from './components/layout/Footer';
 import Dashboard from './components/dashboard/Dashboard';
 import PadList from './components/pad/PadList';
@@ -33,6 +34,8 @@ import FairLaunch2 from './components/fairLaunch/FairLaunch2';
 import FairLaunch3 from './components/fairLaunch/FairLaunch3';
 import FairLaunch4 from './components/fairLaunch/FairLaunch4';
 import FairLaunchRes from './components/fairLaunch/FairLaunchRes';
+
+import PieChart from './PieChart';
 
 import web3 from 'web3';
 
@@ -78,61 +81,67 @@ function App() {
 			<Provider store={store}>
 				<Router>
 					<div className="App">
-						<Header chainId={chainId} />
-						<main className="main">
-							<Route exact path="/" component={Dashboard} />
-							<Switch>
-								<Route exact path="/PadList" component={PadList} />
-							</Switch>
-							<Switch>
-								<Route exact path="/PadInfo/:id" component={PadInfo} />
-							</Switch>
-							<Switch>
-								<Route exact path="/CreateToken" component={CreateToken} />
-							</Switch>
-							<Switch>
-								<Route path="/LaunchPad1" component={LaunchPad1} />
-							</Switch>
-							<Switch>
-								<Route path="/LaunchPad2" component={LaunchPad2} />
-							</Switch>
-							<Switch>
-								<Route exact path="/LaunchPad3" component={LaunchPad3} />
-							</Switch>
-							<Switch>
-								<Route exact path="/LaunchPad4" component={LaunchPad4} />
-							</Switch>
-							<Switch>
-								<Route exact path="/TokenRes" component={TokenRes} />
-							</Switch>
-							<Switch>
-								<Route exact path="/LaunchRes" component={LaunchRes} />
-							</Switch>
-							<Switch>
-								{/* <Route exact path="/authSetting" component={AuthSetting} />  */}
+						<div className="dark-overly">
+							<Header chainId={chainId} />
+							<main className="main">
+								<Header2 />
+								<Route exact path="/" component={Dashboard} />
+								<Switch>
+									<Route exact path="/PadList" component={PadList} />
+								</Switch>
+								<Switch>
+									<Route exact path="/PadInfo/:id" component={PadInfo} />
+								</Switch>
+								<Switch>
+									<Route exact path="/CreateToken" component={CreateToken} />
+								</Switch>
+								<Switch>
+									<Route path="/LaunchPad1" component={LaunchPad1} />
+								</Switch>
+								<Switch>
+									<Route path="/LaunchPad2" component={LaunchPad2} />
+								</Switch>
+								<Switch>
+									<Route exact path="/LaunchPad3" component={LaunchPad3} />
+								</Switch>
+								<Switch>
+									<Route exact path="/LaunchPad4" component={LaunchPad4} />
+								</Switch>
+								<Switch>
+									<Route exact path="/TokenRes" component={TokenRes} />
+								</Switch>
+								<Switch>
+									<Route exact path="/LaunchRes" component={LaunchRes} />
+								</Switch>
+								<Switch>
+									{/* <Route exact path="/authSetting" component={AuthSetting} />  */}
 
-								<PrivateRouter exact path="/authSetting" component={AuthSetting} />
-							</Switch>
-							<Switch>
-								<Route exact path="/login" component={Login} />
-							</Switch>
-							<Switch>
-								<Route exact path="/FairLaunch1" component={FairLaunch1} />
-							</Switch>
-							<Switch>
-								<Route exact path="/FairLaunch2" component={FairLaunch2} />
-							</Switch>
-							<Switch>
-								<Route exact path="/FairLaunch3" component={FairLaunch3} />
-							</Switch>
-							<Switch>
-								<Route exact path="/FairLaunch4" component={FairLaunch4} />
-							</Switch>
-							<Switch>
-								<Route exact path="/FairLaunchRes" component={FairLaunchRes} />
-							</Switch>
-							<Footer />
-						</main>
+									<PrivateRouter exact path="/authSetting" component={AuthSetting} />
+								</Switch>
+								<Switch>
+									<Route exact path="/login" component={Login} />
+								</Switch>
+								<Switch>
+									<Route exact path="/FairLaunch1" component={FairLaunch1} />
+								</Switch>
+								<Switch>
+									<Route exact path="/FairLaunch2" component={FairLaunch2} />
+								</Switch>
+								<Switch>
+									<Route exact path="/FairLaunch3" component={FairLaunch3} />
+								</Switch>
+								<Switch>
+									<Route exact path="/FairLaunch4" component={FairLaunch4} />
+								</Switch>
+								<Switch>
+									<Route exact path="/FairLaunchRes" component={FairLaunchRes} />
+								</Switch>
+								<Switch>
+									<Route exact path="/test" component={PieChart} />
+								</Switch>
+								<Footer />
+							</main>
+						</div>
 					</div>
 				</Router>
 			</Provider>

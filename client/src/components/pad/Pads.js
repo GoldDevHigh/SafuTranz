@@ -62,6 +62,7 @@ class Pads extends Component {
 					withDrawBtnToken={pad.withDrawBtnToken}
 					finalizeBtn={pad.finalizeBtn}
 					FairState={pad.FairState}
+					favorite={pad.favorite}
 					startAlarmState={buffer ? buffer.startAlarmState : false}
 					startAlarmTime5={buffer ? buffer.startAlarmTime5 : false}
 					startAlarmTime15={buffer ? buffer.startAlarmTime15 : false}

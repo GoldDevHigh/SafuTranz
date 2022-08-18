@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Web3 from 'web3';
-import { parse, stringify } from 'flatted';
-import { IconButton, ButtonToolbar, Button } from 'rsuite';
+import { IconButton, ButtonToolbar, Button, Col, Row } from 'rsuite';
 import PauseIcon from '@rsuite/icons/PagePrevious';
 import Moment from 'react-moment';
 import { setWhiteListData, setReduxValue, setReduxValue1 } from '../../actions/padActions';
 import { getEscrowAddress, getNetFeeValueLaunch, getRaisedFee } from '../../actions/authActions';
 import PropTypes from 'prop-types';
+import lunchpadImg from '../assets/img/back/Spaceship_08-removebg-preview@2x.png';
+import { BsFillPatchCheckFill } from 'react-icons/bs';
 
 var presaleRate,
 	softCap,
@@ -28,6 +29,8 @@ var presaleRate,
 	discord,
 	reddit,
 	description,
+	youtube,
+	bannel,
 	whiteListState;
 var tokenName, tokenSymbol, tokenDecimals, tokenSupply, pancakeswapLiquidity, pancakeswapRate, pancakeswapLockup, unit;
 var tokenFee = 0;
@@ -37,16 +40,6 @@ var valRaisedFee = 17;
 class LaunchPad4 extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			presaleAddress: '',
-			logoUrl: '',
-			website: '',
-			formErrors: { logoUrl: '', website: '' },
-			logoUrlValid: false,
-			websiteValid: false,
-			formValid: false
-		};
-
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
@@ -223,9 +216,14 @@ class LaunchPad4 extends Component {
 		discord = whiteData1.discord;
 		reddit = whiteData1.reddit;
 		description = whiteData1.description;
+		youtube = whiteData1.youtube;
+		bannel = whiteData.bannel;
+
 		whiteListState = whiteData.whiteListState;
 		pancakeswapLiquidity = whiteData.pancakeswapLiquidity;
 		pancakeswapRate = whiteData.pancakeswapRate;
+		pancakeswapLockup = whiteData.pancakeswapLockup;
+		pancakeswapLockup = whiteData.pancakeswapLockup;
 		pancakeswapLockup = whiteData.pancakeswapLockup;
 
 		tokenName = window.localStorage.tokenName;
@@ -240,177 +238,280 @@ class LaunchPad4 extends Component {
 						<div style={{ height: '16px' }} />
 						<div className="bg-dark style-border ant-card ant-card-bordered">
 							<div className="ant-card-body">
-								<h1 className="socials text-center" style={{ fontSize: '50px' }}>
-									Finish
-								</h1>
-								<p className="lead text-center" style={{ marginTop: '50px', fontSize: '18px' }}>
-									<i>Review your information</i>
-								</p>
-								<form onSubmit={this.onSubmit} style={{ marginTop: '30px' }}>
-									<div className="table-container">
-										<div>
-											<table>
-												<tbody>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Token name
-														</td>
-														<td className="has-text-info has-text-right">{tokenName}</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Token symbol
-														</td>
-														<td className="has-text-info has-text-right">{tokenSymbol}</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Token decimals
-														</td>
-														<td className="has-text-info has-text-right">
-															{tokenDecimals}
-														</td>
-													</tr>
-													<tr className="launch-tr">
-														<td width="50%" className="launch-tr">
-															Total token
-														</td>
-														<td className="has-text-info has-text-right">
-															{(tokenSupply / 10 ** tokenDecimals).toFixed(0)}
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Presale rate
-														</td>
-														<td className="has-text-info has-text-right">{presaleRate}</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Softcap
-														</td>
-														<td className="has-text-info has-text-right">
-															{softCap} {unit}
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Hardcap
-														</td>
-														<td className="has-text-info has-text-right">
-															{hardCap} {unit}
-														</td>
-													</tr>
-
-													<tr>
-														<td width="50%" className="launch-tr">
-															Minimum buy
-														</td>
-														<td className="has-text-info has-text-right">
-															{minBuy} {unit}
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Maximum buy
-														</td>
-														<td className="has-text-info has-text-right">
-															{maxBuy} {unit}
-														</td>
-													</tr>
-
-													<tr>
-														<td width="50%" className="launch-tr">
-															Start time
-														</td>
-														<td className="has-text-info has-text-right">
-															<Moment format="YYYY-MM-DD HH:mm">{from}</Moment>
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															End time
-														</td>
-														<td className="has-text-info has-text-right">
-															<Moment format="YYYY-MM-DD HH:mm">{to}</Moment>
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Whitelist
-														</td>
-														<td className="has-text-info has-text-right">
-															{whiteListState === true ? 'Yes' : 'No'}
-														</td>
-													</tr>
-
-													<tr>
-														<td width="50%" className="launch-tr">
-															Website
-														</td>
-														<td className="has-text-info has-text-right">{website}</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Liquidity (%)
-														</td>
-														<td className="has-text-info has-text-right">
-															{pancakeswapLiquidity}
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Swap Listing Rate
-														</td>
-														<td className="has-text-info has-text-right">
-															{pancakeswapRate}
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Presale Token Lockup (minutes)
-														</td>
-														<td className="has-text-info has-text-right">
-															{pancakeswapLockup}
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Tokens for Presale
-														</td>
-														<td className="has-text-info has-text-right">
-															{hardCap * presaleRate}
-														</td>
-													</tr>
-													<tr>
-														<td width="50%" className="launch-tr">
-															Tokens for Liquidity
-														</td>
-														<td className="has-text-info has-text-right">
-															{hardCap * presaleRate * pancakeswapLiquidity / 100}
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-
-									<ButtonToolbar>
-										<Link to="/LaunchPad3">
-											<IconButton
-												icon={<PauseIcon className="icon" />}
-												placement="left"
-												id="launch-tool-button"
+								<div className="lead2" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
+									<Row>
+										<Col md={12} xs={24}>
+											<h1
+												className=" text-center"
+												style={{ fontSize: '40px', marginTop: '10px' }}
 											>
-												<strong>Back</strong>
-											</IconButton>
-										</Link>
+												VERIFY TOKEN{' '}
+												<BsFillPatchCheckFill
+													style={{
+														marginBottom: '20px',
+														marginLeft: '-10px',
+														height: '20px',
+														width: '20px',
+														color: '#0F3CB2'
+													}}
+												/>
+											</h1>
+											<p className="text-center socials" style={{ fontSize: '20px' }}>
+												Review your information
+											</p>
+											<h4>Step 4</h4>
+										</Col>
+										<Col md={12} xs={24}>
+											<img
+												src={lunchpadImg}
+												alt="launchpad image"
+												style={{ width: '150px', height: '150px' }}
+											/>
+										</Col>
+									</Row>
+								</div>
 
-										<Button type="submit" id="launch-tool-button">
-											<strong>Submit</strong>
-										</Button>
-									</ButtonToolbar>
-								</form>
+								<div className="lead3" style={{ marginTop: '100px' }}>
+									<form onSubmit={this.onSubmit} style={{ marginTop: '30px' }}>
+										<div>
+											<div>
+												<table className="launch4">
+													<tbody>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Token name
+															</td>
+															<td className="has-text-info has-text-right">
+																{tokenName}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Token symbol
+															</td>
+															<td className="has-text-info has-text-right">
+																{tokenSymbol}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Token decimals
+															</td>
+															<td className="has-text-info has-text-right">
+																{tokenDecimals}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Total Supply
+															</td>
+															<td className="has-text-info has-text-right">
+																{(tokenSupply / 10 ** tokenDecimals).toFixed(0)}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Presale rate
+															</td>
+															<td className="has-text-info has-text-right">
+																{presaleRate}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Soft Cap
+															</td>
+															<td className="has-text-info has-text-right">
+																{softCap} {unit}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Hard Cap
+															</td>
+															<td className="has-text-info has-text-right">
+																{hardCap} {unit}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Minimum Buy
+															</td>
+															<td className="has-text-info has-text-right">
+																{minBuy} {unit}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Maximum Buy
+															</td>
+															<td className="has-text-info has-text-right">
+																{maxBuy} {unit}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Start Time
+															</td>
+															<td className="has-text-info has-text-right">
+																<Moment format="YYYY-MM-DD HH:mm">{from}</Moment>
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																End Time
+															</td>
+															<td className="has-text-info has-text-right">
+																<Moment format="YYYY-MM-DD HH:mm">{to}</Moment>
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Whitelist
+															</td>
+															<td className="has-text-info has-text-right">
+																{whiteListState === true ? 'Yes' : 'No'}
+															</td>
+														</tr>
+
+														<tr>
+															<td width="50%" className="has-text-left">
+																Auto Add Liquidity (%)
+															</td>
+															<td className="has-text-info has-text-right">
+																{pancakeswapLiquidity}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Liquidity (%)
+															</td>
+															<td className="has-text-info has-text-right">
+																{pancakeswapLiquidity}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Swap Listing Rate
+															</td>
+															<td className="has-text-info has-text-right">
+																{pancakeswapRate}
+															</td>
+														</tr>
+
+														<tr>
+															<td width="50%" className="has-text-left">
+																Presale Token Lockup (minutes)
+															</td>
+															<td className="has-text-info has-text-right">
+																{pancakeswapLockup}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Tokens for Presale
+															</td>
+															<td className="has-text-info has-text-right">
+																{hardCap * presaleRate}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Tokens for Liquidity
+															</td>
+															<td className="has-text-info has-text-right">
+																{hardCap * presaleRate * pancakeswapLiquidity / 100}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Website
+															</td>
+															<td className="has-text-info has-text-right">{website}</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Banner URL
+															</td>
+															<td className="has-text-info has-text-right">{bannel}</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Twitter
+															</td>
+															<td className="has-text-info has-text-right">{twitter}</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Github
+															</td>
+															<td className="has-text-info has-text-right">{github}</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Telegram
+															</td>
+															<td className="has-text-info has-text-right">{telegram}</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Facebook
+															</td>
+															<td className="has-text-info has-text-right">{facebook}</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Instagram
+															</td>
+															<td className="has-text-info has-text-right">
+																{instagram}
+															</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Discord
+															</td>
+															<td className="has-text-info has-text-right">{discord}</td>
+														</tr>
+														<tr>
+															<td width="50%" className="has-text-left">
+																Reddit
+															</td>
+															<td className="has-text-info has-text-right">{reddit}</td>
+														</tr>
+													</tbody>
+												</table>
+												<div
+													className="has-text-left"
+													style={{ fontSize: '20px', margin: '20px' }}
+												>
+													Description
+												</div>
+												<div>
+													<textarea
+														disabled
+														value={description}
+														type="text"
+														id="description"
+														name="description"
+													/>
+												</div>
+											</div>
+										</div>
+
+										<ButtonToolbar style={{ marginBottom: '50px', marginTop: '100px' }}>
+											<Link to="/LaunchPad3">
+												<button className="launch-button">
+													<strong>BACK</strong>
+												</button>
+											</Link>
+
+											<button type="submit" className="launch-button">
+												<strong>NEXT</strong>
+											</button>
+										</ButtonToolbar>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>

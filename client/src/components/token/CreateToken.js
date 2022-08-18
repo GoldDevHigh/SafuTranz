@@ -9,12 +9,32 @@ import Spinner from '../common/Spinner';
 import PropTypes from 'prop-types';
 import { getEscrowAddress, getNetFeeValueToken } from '../../actions/authActions';
 import { connect } from 'react-redux';
+import mintImg from '../assets/img/back/Nature_Concept-removebg-preview@2x.png';
+import { Col, Row } from 'rsuite';
 
 var limitData = '';
 var createTokenPanel;
 var valCreateTokenSTate = false;
 var receiverAddress;
 var netFeeValue;
+
+function toFixed(x) {
+	if (Math.abs(x) < 1.0) {
+		var e = parseInt(x.toString().split('e-')[1]);
+		if (e) {
+			x *= Math.pow(10, e - 1);
+			x = '0.' + new Array(e).join('0') + x.toString().substring(2);
+		}
+	} else {
+		var e = parseInt(x.toString().split('+')[1]);
+		if (e > 20) {
+			e -= 20;
+			x /= Math.pow(10, e);
+			x += new Array(e + 1).join('0');
+		}
+	}
+	return x;
+}
 
 class CreateToken extends Component {
 	constructor(props) {
@@ -116,7 +136,7 @@ class CreateToken extends Component {
 									tokenName,
 									symbol,
 									decimals,
-									(totalSupply * 10 ** decimals).toString(),
+									String(toFixed(totalSupply * 10 ** decimals)),
 									receiverAddress,
 									// web3.utils.toWei(String(0.01), 'ether')
 									web3.utils.toWei(String(tokenFee), 'ether')
@@ -125,7 +145,6 @@ class CreateToken extends Component {
 
 							let parameter = {
 								from: userAddress,
-								// value: web3.utils.toWei(String(0.01), 'ether')
 								value: web3.utils.toWei(String(tokenFee), 'ether')
 							};
 
@@ -136,11 +155,6 @@ class CreateToken extends Component {
 								})
 								.on('confirmation', () => {})
 								.then((newContractInstance) => {
-									// console.log(newContractInstance);
-									console.log('Deployed Contract Address : ', newContractInstance.options.address);
-									// newContractInstance.methods.totalSupply().call().then(res=>{
-									//   console.log(res);
-									// })
 									this.setState({
 										tokenAddress: newContractInstance.options.address
 									});
@@ -271,93 +285,121 @@ class CreateToken extends Component {
 		} else {
 			createTokenPanel = (
 				<form onSubmit={this.onSubmit}>
-					<p className="has-text-primary is-size-5">(*) is required field.</p>
 					<div className="field">
-						<label htmlFor="tokenName" id="token-text">
-							Name<sup className="has-text-danger">*</sup>
+						<label htmlFor="decimals" id="token-text2">
+							Token Type<sup className="has-text-danger">*</sup>
 						</label>
 						<div className="control">
-							<input
-								label="Standard"
-								value={this.state.tokenName}
+							<select
+								value={this.state.tokenType}
 								onChange={(event) => this.handleInput(event)}
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': this.state.formErrors.tokenName
-								})}
-								type="text"
-								id="tokenName"
-								name="tokenName"
-								placeholder="Ex: Ethereum"
-								maxLength="255"
-							/>
-							<div className="invalid-feedback">{this.state.formErrors.tokenName}</div>
+								className="token-selected-input"
+								name="tokenType"
+								placeholder="Standard Token"
+							>
+								<option value="volvo">StandardToken</option>
+								<option value="volvo">StandardToken2</option>
+							</select>
+							<div className="invalid-feedback">{this.state.formErrors.tokenType}</div>
 						</div>
 					</div>
-					<div className="field">
-						<label htmlFor="symbol" id="token-text">
-							Symbol<sup className="has-text-danger">*</sup>
-						</label>
-						<div className="control">
-							<input
-								value={this.state.symbol}
-								onChange={(event) => this.handleInput(event)}
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': this.state.formErrors.symbol
-								})}
-								type="text"
-								id="tokenName"
-								name="symbol"
-								placeholder="Ex: ETH"
-								maxLength="255"
-							/>
+					<Row>
+						<Col md={12} xs={24}>
+							<div className="field">
+								<label htmlFor="tokenName" id="token-text">
+									Name<sup className="has-text-danger">*</sup>
+								</label>
+								<div className="control">
+									<input
+										label="Standard"
+										value={this.state.tokenName}
+										onChange={(event) => this.handleInput(event)}
+										className={classnames('form-control form-control-lg', {
+											'is-invalid': this.state.formErrors.tokenName
+										})}
+										type="text"
+										id="tokenName"
+										name="tokenName"
+										placeholder="Ex: Ethereum"
+										maxLength="255"
+									/>
+									<div className="invalid-feedback">{this.state.formErrors.tokenName}</div>
+								</div>
+							</div>
+						</Col>
+						<Col md={12} xs={24}>
+							<div className="field">
+								<label htmlFor="symbol" id="token-text">
+									Symbol<sup className="has-text-danger">*</sup>
+								</label>
+								<div className="control">
+									<input
+										value={this.state.symbol}
+										onChange={(event) => this.handleInput(event)}
+										className={classnames('form-control form-control-lg', {
+											'is-invalid': this.state.formErrors.symbol
+										})}
+										type="text"
+										id="tokenName"
+										name="symbol"
+										placeholder="Ex: ETH"
+										maxLength="255"
+									/>
 
-							<div className="invalid-feedback">{this.state.formErrors.symbol}</div>
-						</div>
-					</div>
-					<div className="field">
-						<label htmlFor="decimals" id="token-text">
-							Decimals<sup className="has-text-danger">*</sup>
-						</label>
-						<div className="control">
-							<input
-								value={this.state.decimals}
-								onChange={(event) => this.handleInput(event)}
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': this.state.formErrors.decimals
-								})}
-								type="text"
-								id="tokenName"
-								name="decimals"
-								placeholder="Ex: 18"
-							/>
+									<div className="invalid-feedback">{this.state.formErrors.symbol}</div>
+								</div>
+							</div>
+						</Col>
+					</Row>
+					<Row>
+						<Col md={12} xs={24}>
+							<div className="field">
+								<label htmlFor="decimals" id="token-text">
+									Decimals<sup className="has-text-danger">*</sup>
+								</label>
+								<div className="control">
+									<input
+										value={this.state.decimals}
+										onChange={(event) => this.handleInput(event)}
+										className={classnames('form-control form-control-lg', {
+											'is-invalid': this.state.formErrors.decimals
+										})}
+										type="text"
+										id="tokenName"
+										name="decimals"
+										placeholder="Ex: 18"
+									/>
 
-							<div className="invalid-feedback">{this.state.formErrors.decimals}</div>
-						</div>
-					</div>
+									<div className="invalid-feedback">{this.state.formErrors.decimals}</div>
+								</div>
+							</div>
+						</Col>
+						<Col md={12} xs={24}>
+							<div className="field">
+								<label htmlFor="totalSupply" id="token-text">
+									Total supply<sup className="has-text-danger">*</sup>
+								</label>
+								<div className="control">
+									<input
+										value={this.state.totalSupply}
+										onChange={(event) => this.handleInput(event)}
+										className={classnames('form-control form-control-lg', {
+											'is-invalid': this.state.formErrors.totalSupply
+										})}
+										type="text"
+										id="tokenName"
+										name="totalSupply"
+										placeholder="Ex: 100000000000"
+									/>
 
-					<div className="field">
-						<label htmlFor="totalSupply" id="token-text">
-							Total supply<sup className="has-text-danger">*</sup>
-						</label>
-						<div className="control">
-							<input
-								value={this.state.totalSupply}
-								onChange={(event) => this.handleInput(event)}
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': this.state.formErrors.totalSupply
-								})}
-								type="text"
-								id="tokenName"
-								name="totalSupply"
-								placeholder="Ex: 100000000000"
-							/>
-
-							<div className="invalid-feedback">{this.state.formErrors.totalSupply}</div>
-						</div>
-					</div>
+									<div className="invalid-feedback">{this.state.formErrors.totalSupply}</div>
+								</div>
+							</div>
+						</Col>
+					</Row>
 					<div className="has-text-centered mt-6 pt-4 mb-4">
 						<button type="submit" className="token-button" onClick={this.onSubmit}>
-							<stron>Create token</stron>
+							<stron>NEXT</stron>
 						</button>
 					</div>
 					<p className="token-info">Create token fee: {limitData}</p>
@@ -371,11 +413,32 @@ class CreateToken extends Component {
 
 				<div className="bg-dark  style-border ant-card ant-card-bordered">
 					<div className="ant-card-body" id="createToken">
-						<h1 className="socials text-center" style={{ fontSize: '40px' }}>
-							Create Token
-						</h1>
+						<div className="lead2" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
+							<Row>
+								<Col md={12} xs={24}>
+									<h1 className="text-center" style={{ fontSize: '40px' }}>
+										CREATE TOKEN
+										<img
+											src={mintImg}
+											alt="mint image "
+											style={{
+												height: '20px',
+												width: '20px',
+												marginTop: '-35px'
+											}}
+										/>
+									</h1>
+									<h4 style={{ color: '#FFAA00' }}>All fields below are required</h4>
+								</Col>
+								<Col md={12} xs={24}>
+									<img src={mintImg} alt="mint image" style={{ width: '100px', height: '100px' }} />
+								</Col>
+							</Row>
+						</div>
 						<br />
-						{createTokenPanel}
+						<br />
+						<br />
+						<div className="lead2">{createTokenPanel}</div>
 					</div>
 				</div>
 			</div>

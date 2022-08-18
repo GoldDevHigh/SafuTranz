@@ -12,7 +12,7 @@ import {
 	setNetFeeValueLaunch,
 	getNetFeeValueLaunch
 } from '../../actions/authActions';
-import { Button, Col, Row, ButtonGroup, Toggle, InputGroup } from 'rsuite';
+import { Button, Col, Row, ButtonGroup, Toggle, InputGroup, List } from 'rsuite';
 import SearchInput, { createFilter } from 'react-search-input';
 import { withRouter } from 'react-router-dom';
 import TableScrollbar from 'react-table-scrollbar';
@@ -50,10 +50,10 @@ export class AuthSetting extends Component {
 			pvtState: false,
 			editBtnState: false,
 			deleteBtnState: false,
+			advertise: false,
 			nPassword: '',
 			password: '',
 			password2: '',
-			escrowAddress: '',
 			feeValue: 0,
 			netName: '',
 			netTokenSelect: true,
@@ -78,13 +78,17 @@ export class AuthSetting extends Component {
 
 	componentDidMount() {
 		this.props.getAllData();
+		this.props.getEscrowAddress();
 		window.scrollTo(0, 0);
+		// axios.get('/api/')
 	}
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.errors) {
 			this.setState({ errors: nextProps.errors });
 		}
 	}
+
 	handleChange = (event) => {
 		this.setState({
 			searchTerm: event
@@ -94,6 +98,7 @@ export class AuthSetting extends Component {
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
 	}
+
 	onChangeCheck(e) {
 		this.setState({ [e.target.name]: e.target.checked });
 	}
@@ -106,9 +111,11 @@ export class AuthSetting extends Component {
 			safuState: false,
 			prmState: false,
 			pvtState: false,
+			advertise: false,
 			editBtnState: true
 		});
 	}
+
 	onEditStateSave(e) {
 		const id = e.target.value;
 		const setData = {
@@ -117,6 +124,7 @@ export class AuthSetting extends Component {
 			auditState: this.state.adtState,
 			safuState: this.state.safuState,
 			premium: this.state.prmState,
+			advertise: this.state.advertise,
 			privateSale: this.state.pvtState
 		};
 
@@ -131,6 +139,7 @@ export class AuthSetting extends Component {
 			})
 			.catch((res) => console.log(res));
 	}
+
 	onEditStateCancel(e) {
 		editState[e.target.value] = false;
 		this.setState({
@@ -144,6 +153,7 @@ export class AuthSetting extends Component {
 			deleteBtnState: true
 		});
 	}
+
 	onDeleteBtn(e) {
 		var id = e.target.value;
 		axios
@@ -157,6 +167,7 @@ export class AuthSetting extends Component {
 			})
 			.catch((res) => console.log(res));
 	}
+
 	onDeleteCancel(e) {
 		deleteState[e.target.value] = false;
 		this.setState({
@@ -241,6 +252,7 @@ export class AuthSetting extends Component {
 					default:
 						neticon = bnb;
 				}
+
 				return (
 					<tr key={i}>
 						<td>{i + 1}</td>
@@ -331,6 +343,21 @@ export class AuthSetting extends Component {
 						</td>
 						<td>
 							{editState[i] ? (
+								<input
+									type="checkbox"
+									name="advertise"
+									value={this.state.advertise}
+									onChange={this.onChangeCheck}
+									className="auth-checkbox"
+								/>
+							) : item.advertise ? (
+								<img src={check} style={{ width: '25px' }} alt="check" />
+							) : (
+								<img src={uncheck} style={{ width: '25px' }} alt="uncheck" />
+							)}
+						</td>
+						<td style={{ minWidth: '150px' }}>
+							{editState[i] ? (
 								<ButtonGroup>
 									<Button
 										color="cyan"
@@ -357,7 +384,7 @@ export class AuthSetting extends Component {
 								</Button>
 							)}
 						</td>
-						<td>
+						<td style={{ minWidth: '150px' }}>
 							{deleteState[i] ? (
 								<ButtonGroup>
 									<Button
@@ -606,7 +633,7 @@ export class AuthSetting extends Component {
 								/>
 							</div>
 							<div className="auth-table">
-								<TableScrollbar rows={10}>
+								<TableScrollbar rows={15}>
 									<table>
 										<thead className="auth-table-header">
 											<tr>
@@ -620,6 +647,7 @@ export class AuthSetting extends Component {
 												<th> SAFU </th>
 												<th> PRM </th>
 												<th> PVT </th>
+												<th> ADVERTISE </th>
 												<th> Save </th>
 												<th> Delete </th>
 											</tr>
@@ -628,6 +656,10 @@ export class AuthSetting extends Component {
 									</table>
 								</TableScrollbar>
 							</div>
+							<h3 style={{ marginTop: '100px' }}>Subscriber List</h3>
+							<List autoScroll className="info-list">
+								{/* {lister} */}
+							</List>
 						</div>
 					</div>
 				</div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import Web3 from 'web3';
 import axios from 'axios';
-import { Button, Input, Radio, RadioGroup, List } from 'rsuite';
+import { Button, Input, Radio, RadioGroup, List, Col, Row } from 'rsuite';
 import { getWhitelist, setWhiteListData, getWhitelistdata } from '../../actions/padActions';
 import { getEscrowAddress } from '../../actions/authActions';
 import { connect } from 'react-redux';
@@ -17,8 +17,15 @@ import {
 	FaTelegram,
 	FaTwitter
 } from 'react-icons/fa';
+import { TiArrowBack } from 'react-icons/ti';
 import Moment from 'react-moment';
 import ProgressBar from '@ramonak/react-progress-bar';
+import { Link } from 'react-router-dom';
+import logoVideo from '../assets/video/sample.mp4';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 var netName;
 var netNameBtn = true,
@@ -78,6 +85,23 @@ var lockTime = new Date(),
 var currentDate = new Date();
 var receiverAddress;
 var youRaise;
+var presaleAddresstemp, tokenAddresstemp;
+var doughnutPresale, doughnutLiquidity, doughnutLock, doughnutUnlock, doughnutTeam, doughnutBurn;
+
+const options = {
+	plugins: {
+		legend: {
+			position: 'top',
+			// rtl: true,
+			labels: {
+				usePointStyle: true,
+				pointStyle: 'circle',
+				padding: 8,
+				color: '#fff'
+			}
+		}
+	}
+};
 
 class PadInfo extends Component {
 	constructor(props) {
@@ -93,7 +117,8 @@ class PadInfo extends Component {
 			numberBuyer: 0,
 			modalState: false,
 			address: '',
-			adderssSelect: ''
+			adderssSelect: '',
+			data: {}
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -109,9 +134,20 @@ class PadInfo extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getWhitelist(this.props.match.params.id);
-		this.props.getWhitelistdata(this.props.match.params.id);
+		let buf = this.props.match.params.id;
+		presaleAddresstemp = buf.slice(0, 6) + ' ... ' + buf.slice(-3);
+
+		this.props.getWhitelist(buf);
+		this.props.getWhitelistdata(buf);
 		this.props.getEscrowAddress();
+		///BUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+		doughnutPresale = 12;
+		doughnutLiquidity = 10;
+		doughnutLock = 8;
+		doughnutUnlock = 6;
+		doughnutTeam = 5;
+		doughnutBurn = 3;
+
 		window.scrollTo(0, 0);
 		axios
 			.get(`/api/getPresaleContractAbi`)
@@ -119,7 +155,7 @@ class PadInfo extends Component {
 				const abi = res.data;
 				const web3 = new Web3(Web3.givenProvider);
 
-				const presaleContract = new web3.eth.Contract(abi, this.props.match.params.id);
+				const presaleContract = new web3.eth.Contract(abi, buf);
 
 				presaleContract.methods.presaleStatus().call().then((res) => {
 					switch (res) {
@@ -467,6 +503,8 @@ class PadInfo extends Component {
 			privateSale = whiteData.data[0].privateSale;
 			FairState = whiteData.data[0].FairState;
 
+			tokenAddresstemp = tokenAddress.slice(0, 6) + ' ... ' + tokenAddress.slice(-3);
+
 			switch (whiteData.data[0].presaleState) {
 				case '3':
 					presaleState = 'Failed';
@@ -699,16 +737,41 @@ class PadInfo extends Component {
 			whiteListState = this.props.pad.whiteData.data[0].whiteListState;
 		}
 
+		//display donghnut set
+		const data = {
+			labels: [ 'Presale', 'Liquidity', 'Team', 'Locked', 'Unlocked', 'Burnt' ],
+			datasets: [
+				{
+					// label: '# of Votes',
+					data: [
+						doughnutPresale,
+						doughnutLiquidity,
+						doughnutLock,
+						doughnutUnlock,
+						doughnutTeam,
+						doughnutBurn
+					],
+					backgroundColor: [ '#02D485', '#39D402', '#D44302', '#D48E02', '#0256D4', '#D4023B' ],
+					borderColor: '#000',
+					borderWidth: 5,
+					hoverOffset: 4
+				}
+			]
+		};
+
 		return (
 			<div>
 				<section className="ant-layout black-background">
-					<main className="ant-layout-content MainLayout_content__2mZF9">
+					<main className="">
 						<div className="py-5">
 							{FairState ? (
 								<div className="bg-dark style-border columns mt-4">
 									<div className="column is-flex-grow-2">
 										<div className="ant-card ant-card-bordered">
 											<div className="ant-card-body">
+												<Link to="/PadList">
+													<button className="back-button">back</button>
+												</Link>
 												<article className="media pool-detail" style={{ position: 'relative' }}>
 													<div className="media-content">
 														<div className="content">
@@ -883,8 +946,10 @@ class PadInfo extends Component {
 															</tr>
 															<tr>
 																<td colSpan={2}>
-																	<div class="divider flex flex-column">
-																		<div class="rounded-md">Token Information</div>
+																	<div className="divider flex flex-column">
+																		<div className="rounded-md">
+																			Token Information
+																		</div>
 																	</div>
 																</td>
 															</tr>
@@ -932,8 +997,8 @@ class PadInfo extends Component {
 															</tr>
 															<tr>
 																<td colSpan={2}>
-																	<div class="divider flex flex-column">
-																		<div class="rounded-md">
+																	<div className="divider flex flex-column">
+																		<div className="rounded-md">
 																			Presale Information
 																		</div>
 																	</div>
@@ -1052,8 +1117,8 @@ class PadInfo extends Component {
 														<tbody>
 															<tr>
 																<td colSpan={2}>
-																	<div class="divider flex flex-column">
-																		<div class="rounded-md">
+																	<div className="divider flex flex-column">
+																		<div className="rounded-md">
 																			Presale Status Information
 																		</div>
 																	</div>
@@ -1325,14 +1390,39 @@ class PadInfo extends Component {
 									)}
 								</div>
 							) : (
-								<div className="bg-dark style-border columns mt-4">
-									<div className="column is-flex-grow-2">
-										<div className="ant-card ant-card-bordered">
-											<div className="ant-card-body">
-												<article className="media pool-detail" style={{ position: 'relative' }}>
-													<div className="media-content">
-														<div className="content">
-															<div className="is-flex is-align-items-center">
+								<div>
+									<Link to="/PadList">
+										<div className="has-text-left">
+											<button className="back-button">
+												<TiArrowBack />back
+											</button>
+										</div>
+									</Link>
+									<div className="columns mt-4">
+										<div className="column is-flex-grow-2">
+											<div className="img-header" />
+											<div className="ant-card ant-card-bordered colum-back">
+												<img
+													src={logoUrl}
+													width="80px"
+													height="80px"
+													alt="logo"
+													style={{ marginTop: '-40px', float: 'left', marginLeft: '10px' }}
+												/>
+												<div className="ant-card-body">
+													<div className="media-content text-center">
+														<div
+															className="is-align-items-center"
+															style={{
+																fontSize: '30px',
+																marginBottom: '10px',
+																marginRight: '50px'
+															}}
+														>
+															{tokenName} Presale
+														</div>
+														<div>
+															<div className="is-align-items-center">
 																<div>
 																	{website !== null ? (
 																		<a
@@ -1437,9 +1527,8 @@ class PadInfo extends Component {
 																	)}
 																</div>
 															</div>
-															<div className="ant-typography" />
 														</div>
-														<div>
+														<div className="is-align-items-center">
 															{whiteListState ? (
 																<span className="card-whitelist-text">WHT</span>
 															) : (
@@ -1468,444 +1557,408 @@ class PadInfo extends Component {
 															)}
 														</div>
 													</div>
-												</article>
-												<div className="table-container mt-6">
-													<table>
-														<tbody>
-															<tr>
-																<td>
-																	<img
-																		src={logoUrl}
-																		width="60px"
-																		height="60px"
-																		alt="logo"
-																	/>
-																</td>
-																<td className="has-text-left">
-																	<h3 className="mr-3  launch-tr">
-																		{tokenName} Presale
-																	</h3>
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">Description</td>
-																<td
-																	className="has-text-left"
-																	style={{ fontSize: '15px' }}
-																>
-																	{description}
-																</td>
-															</tr>
-															<tr>
-																<td colSpan={2}>
-																	<div class="divider flex flex-column">
-																		<div class="rounded-md">Token Information</div>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">Chain</td>
-																<td className="has-text-left">{chainId}</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Token Address
-																</td>
-																<td className="has-text-left addresses">
-																	<a
-																		href={tokenNameUrl + tokenAddress}
-																		target="_blank"
-																		rel="noreferrer nofollow"
-																		id="pad-info-a"
-																	>
-																		{tokenAddress}
-																	</a>
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">Token Name</td>
-																<td className="has-text-left">{tokenName}</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Token Symbol
-																</td>
-																<td className="has-text-left">{tokenSymbol}</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Token Decimals
-																</td>
-																<td className="has-text-left">{tokenDecimal}</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Total Supply
-																</td>
-																<td className="has-text-left">{tokenSupply}</td>
-															</tr>
-															<tr>
-																<td colSpan={2}>
-																	<div class="divider flex flex-column">
-																		<div class="rounded-md">
-																			Presale Information
-																		</div>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Presale Address
-																</td>
-																<td className="has-text-left">
-																	<a
-																		className="mr-1"
-																		href={tokenNameUrl + this.props.match.params.id}
-																		target="_blank"
-																		rel="noreferrer nofollow"
-																		id="pad-info-a"
-																	>
-																		{this.props.match.params.id}
-																	</a>
-																	<br />
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Presale Rate
-																</td>
-																<td className="has-text-left">
-																	1 {netName} = {presaleRate}
-																	{tokenSymbol}
-																</td>
-															</tr>
-
-															<tr>
-																<td className="has-text-left launch-tr">Soft Cap</td>
-																<td className="has-text-left">
-																	{softCap} {netName}
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">Hard Cap</td>
-																<td className="has-text-left">
-																	{hardCap} {netName}
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">Minimum Buy</td>
-																<td className="has-text-left">
-																	{minBuy} {netName}
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">Maximum Buy</td>
-																<td className="has-text-left">
-																	{maxBuy} {netName}
-																</td>
-															</tr>
-
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Presale Start Time
-																</td>
-																<td className="has-text-left">
-																	<Moment format="YYYY-MM-DD HH:mm">{from}</Moment>
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Presale End Time
-																</td>
-																<td className="has-text-left">
-																	<Moment format="YYYY-MM-DD HH:mm">{to}</Moment>
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Liquidity (%)
-																</td>
-																<td className="has-text-left">
-																	{pancakeswapLiquidity}
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Swap Listing Rate
-																</td>
-																<td className="has-text-left">{pancakeswapRate}</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Presale Token Lockup (minutes)
-																</td>
-																<td className="has-text-left">{pancakeswapLockup}</td>
-															</tr>
-															<tr>
-																<td width="50%" className="has-text-left launch-tr">
-																	Tokens for Presale
-																</td>
-																<td className="has-text-info has-text-left">
-																	{hardCap * presaleRate}
-																</td>
-															</tr>
-															<tr>
-																<td width="50%" className="has-text-left launch-tr">
-																	Tokens for Liquidity
-																</td>
-																<td className="has-text-info has-text-left">
-																	{hardCap * presaleRate * pancakeswapLiquidity / 100}
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div className="column is-flex-grow-1">
-										<div className="ant-card ant-card-bordered">
-											<div className="ant-card-body">
-												<div className="field">
-													<table>
-														<tbody>
-															<tr>
-																<td colSpan={2}>
-																	<div class="divider flex flex-column">
-																		<div class="rounded-md">
-																			Presale Status Information
-																		</div>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Presale Status
-																</td>
-																<td className="text-white" style={{ fontSize: '15px' }}>
-																	{dipTime}
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Number of Buyers
-																</td>
-																<td className="text-white">{this.state.numberBuyer}</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">Sold Tokens</td>
-																<td className="text-white">
-																	{this.state.soldTokens} {tokenSymbol}
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Raised Amount
-																</td>
-																<td className="text-white">
-																	{this.state.raisedAmount} {netName}
-																</td>
-															</tr>
-															<tr>
-																<td className="has-text-left launch-tr">
-																	Raised by You
-																</td>
-																<td className="text-white">
-																	{youRaise / 10 ** 18} {netName}
-																</td>
-															</tr>
-														</tbody>
-													</table>
-													<ProgressBar
-														completed={(saleCount / Number(hardCap) * 100).toFixed(0)}
-														className="info-progressbar"
-													/>
-													<span className="float-left">0</span>
-													<span className="float-right">
-														{hardCap} {netName}
-													</span>
-													<div className="ant-card ant-card-bordered">
-														{ownerState ? (
-															<div className="ant-card-body">
-																<div className="mt-2">
-																	<div className="field">
-																		<label
-																			htmlFor=""
-																			className="launch-tr"
-																			style={{ fontSize: '30px' }}
-																		>
-																			Sale Type
-																		</label>
-																		<RadioGroup
-																			style={{ width: '100%', display: 'flex' }}
-																			value={whiteListState}
-																			onChange={(value) => {
-																				this.changeWhiteListState(value);
-																			}}
-																		>
-																			<Radio value={false} className="text-white">
-																				Public
-																			</Radio>
-																			<Radio value={true} className="text-white">
-																				WhiteList
-																			</Radio>
-																		</RadioGroup>
-																	</div>
-																	<List autoScroll className="info-list">
-																		{lister}
-																	</List>
-																	<h4 className="text-white">
-																		{whitelist ? whitelist.length : 0} whiteListed
-																		users
-																	</h4>
-																	{whiteListState ? (
-																		<div>
-																			<Input
-																				placeholder="whitelist address"
-																				id="pay-info-input-owner"
-																				style={{ marginTop: '10px' }}
-																				value={this.state.address}
-																				onChange={this.onChangeValue}
-																			/>
-																			<Button
-																				disabled={this.state.address === ''}
-																				className="pay-info-button-add"
-																				style={{ marginTop: '20px' }}
-																				onClick={this.addAddress}
+													<div
+														className="text-center"
+														style={{
+															fontSize: '15px',
+															marginTop: '30px',
+															marginBottom: '30px'
+														}}
+													>
+														{description}
+													</div>
+													<div className="table-container mt-2">
+														<table>
+															<tbody>
+																<tr>
+																	<td colSpan={2}>
+																		<div className="divider flex flex-column">
+																			<div
+																				className="rounded-md"
+																				style={{ fontSize: '18px' }}
 																			>
-																				Add
-																			</Button>
-																			<Button
-																				disabled={this.state.address === ''}
-																				className="pay-info-button-add"
-																				style={{ marginTop: '20px' }}
-																				onClick={this.RemoveAddress}
-																			>
-																				Remove
-																			</Button>
+																				Token Information
+																			</div>
 																		</div>
-																	) : (
-																		''
-																	)}
-																	<hr />
-																</div>
-																<label
-																	htmlFor=""
-																	className="label"
-																	style={{ fontSize: '15px' }}
-																	id="white"
-																>
-																	Pool Actions
-																</label>
-																<div className="my-2">
-																	<button
-																		disabled={finalizeBtn}
-																		type="button"
-																		className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
-																		onClick={this.onFinalizeClick}
-																	>
-																		<span>Finalize Pool</span>
-																	</button>
-																</div>
-																<div className="my-2">
-																	<button
-																		disabled={cancelBtn}
-																		type="button"
-																		className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
-																		onClick={this.onCancelClick}
-																	>
-																		<span>Cancel Pool</span>
-																	</button>
-																</div>
-																<div className="my-2">
-																	<button
-																		disabled={ownerWithDrawBtnState}
-																		type="button"
-																		className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
-																		onClick={this.onWithDraw}
-																	>
-																		<span>withdraw ICO</span>
-																	</button>
-																</div>
-															</div>
-														) : (
-															<div>
-																<List autoScroll className="info-list info-list-state">
-																	{lister}
-																</List>
-																<h4 className="text-white">
-																	{whitelist ? whitelist.length : 0} whiteListed users
-																</h4>
-															</div>
-														)}
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Token Address
+																	</td>
+																	<td className="has-text-right addresses">
+																		<a
+																			href={tokenNameUrl + tokenAddress}
+																			target="_blank"
+																			rel="noreferrer nofollow"
+																			id="pad-info-a"
+																		>
+																			{tokenAddresstemp}
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Token Name
+																	</td>
+																	<td className="has-text-right">{tokenName}</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Token Symbol
+																	</td>
+																	<td className="has-text-right">{tokenSymbol}</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Total Supply
+																	</td>
+																	<td className="has-text-right">{tokenSupply}</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Token Decimals
+																	</td>
+																	<td className="has-text-right">{tokenDecimal}</td>
+																</tr>
+															</tbody>
+														</table>
+														<table style={{ marginTop: '30px' }}>
+															<tbody>
+																<tr>
+																	<td colSpan={2}>
+																		<div className="divider flex flex-column">
+																			<div
+																				className="rounded-md"
+																				style={{ fontSize: '18px' }}
+																			>
+																				Presale Information
+																			</div>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Presale Address
+																	</td>
+																	<td className="has-text-right">
+																		<a
+																			className="mr-1"
+																			href={
+																				tokenNameUrl +
+																				this.props.match.params.id
+																			}
+																			target="_blank"
+																			rel="noreferrer nofollow"
+																			id="pad-info-a"
+																		>
+																			{presaleAddresstemp}
+																		</a>
+																		<br />
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Presale Rate
+																	</td>
+																	<td className="has-text-right">
+																		1 {netName} = {presaleRate}
+																		{tokenSymbol}
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Listing Rate
+																	</td>
+																	<td className="has-text-right">
+																		{pancakeswapRate}
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Soft Cap
+																	</td>
+																	<td className="has-text-right">
+																		{softCap} {netName}
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Hard Cap
+																	</td>
+																	<td className="has-text-right">
+																		{hardCap} {netName}
+																	</td>
+																</tr>
+																<tr>
+																	<td width="50%" className="has-text-left launch-tr">
+																		Tokens for Presale
+																	</td>
+																	<td className="has-text-info has-text-right">
+																		{hardCap * presaleRate}
+																	</td>
+																</tr>
+																<tr>
+																	<td width="50%" className="has-text-left launch-tr">
+																		Tokens for Liquidity
+																	</td>
+																	<td className="has-text-info has-text-right">
+																		{hardCap *
+																			presaleRate *
+																			pancakeswapLiquidity /
+																			100}
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Liquidity (%)
+																	</td>
+																	<td className="has-text-right">
+																		{pancakeswapLiquidity}
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Presale Start Time
+																	</td>
+																	<td className="has-text-right">
+																		<Moment format="YYYY-MM-DD HH:mm">
+																			{from}
+																		</Moment>
+																	</td>
+																</tr>
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Presale End Time
+																	</td>
+																	<td className="has-text-right">
+																		<Moment format="YYYY-MM-DD HH:mm">{to}</Moment>
+																	</td>
+																</tr>
+
+																<tr>
+																	<td className="has-text-left launch-tr">
+																		Lockup (Minutes)
+																	</td>
+																	<td className="has-text-right">
+																		{pancakeswapLockup}
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+													<div
+														className="text-center"
+														style={{ marginTop: '50px', marginBottom: '30px' }}
+													>
+														<video autoplay muted loop controls height="200" width="250">
+															<source src={logoVideo} type="video/mp4" autostart />
+															Your browser does not support HTML5 video.
+														</video>
 													</div>
 												</div>
-												{whiteListState ? !whileListInputState ? (
-													<p style={{ color: 'red', marginTop: '30px', fontSize: '20px' }}>
-														You are not a whitelisted user
-													</p>
-												) : (
-													<p style={{ marginTop: '30px', fontSize: '20px' }}>
-														You are a whitelisted user
-													</p>
-												) : (
-													''
-												)}
 											</div>
 										</div>
-									</div>
-									{whileListInputState ? (
+
 										<div className="column is-flex-grow-1">
 											<div className="ant-card ant-card-bordered">
-												<div className="ant-card-body">
-													<form onSubmit={this.onSubmit}>
-														<div className="field">
-															<div class="divider flex flex-column">
-																<div class="rounded-md">Sale Control</div>
+												<div className="padinfo-pannel">
+													<div className="divider flex flex-column">
+														<div className="rounded-md1">Presale Status Information</div>
+													</div>
+													<div className="ant-card-body1">
+														<div className="padinfo-table">
+															<Row>
+																<Col md={12} className="has-text-left launch-tr">
+																	Presale Status
+																</Col>
+																<Col
+																	md={12}
+																	className="has-text-right text-white"
+																	style={{ fontSize: '15px' }}
+																>
+																	{dipTime}
+																</Col>
+															</Row>
+
+															<Row>
+																<Col md={16} className="has-text-left launch-tr">
+																	Number of Buyers
+																</Col>
+																<Col md={8} className="has-text-right  text-white">
+																	{this.state.numberBuyer}
+																</Col>
+															</Row>
+															<Row>
+																<Col md={8} className="has-text-left launch-tr">
+																	Sold Tokens
+																</Col>
+																<Col md={16} className=" has-text-right text-white">
+																	{this.state.soldTokens} {tokenSymbol}
+																</Col>
+															</Row>
+															<Row>
+																<Col md={12} className="has-text-left launch-tr">
+																	Raised Amount
+																</Col>
+																<Col md={12} className=" has-text-right text-white">
+																	{this.state.raisedAmount} {netName}
+																</Col>
+															</Row>
+															<Row>
+																<Col md={12} className="has-text-left launch-tr">
+																	Raised by You
+																</Col>
+																<Col md={12} className=" has-text-right text-white">
+																	{youRaise / 10 ** 18} {netName}
+																</Col>
+															</Row>
+															<div
+																style={{
+																	marginTop: '20px',
+																	paddingLeft: '10px',
+																	paddingRight: '10px'
+																}}
+															>
+																<ProgressBar
+																	completed={(saleCount /
+																		Number(hardCap) *
+																		100).toFixed(0)}
+																	bgColor={
+																		saleCount <= softCap ? '#bf9d07' : '#2fbf07'
+																	}
+																	className="info-progressbar"
+																	labelAlignment="center"
+																	labelColor="rgb(0 51 255)"
+																	customLabel={
+																		(saleCount / Number(hardCap) * 100).toFixed(0) +
+																		'%'
+																	}
+																	height="15px"
+																/>
+																<span className="float-left">0</span>
+																<span className="float-right">
+																	{hardCap} {netName}
+																</span>
 															</div>
+														</div>
+													</div>
+
+													{whiteListState ? !whileListInputState ? (
+														<p
+															style={{
+																color: 'red',
+																marginTop: '30px',
+																fontSize: '20px'
+															}}
+														>
+															You are not a whitelisted user
+														</p>
+													) : (
+														<p style={{ marginTop: '30px', fontSize: '20px' }}>
+															You are a whitelisted user
+														</p>
+													) : (
+														''
+													)}
+												</div>
+												<div className="padinfo-pannel">
+													<h4 style={{ marginTop: '10px', color: '#F5F5F5' }}>
+														Token Supply Distribution
+													</h4>
+													<div className="divider1 flex flex-column text-white" />
+													<div className="ant-card-body1">
+														<h5 style={{ marginTop: '10px', marginBottom: '10px' }}>
+															Market Cap: 150,000 $
+														</h5>
+														<Doughnut data={data} options={options} />
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div className="column is-flex-grow-1">
+											<div className="ant-card ant-card-bordered">
+												<div className="padinfo-pannel">
+													<div className="divider flex flex-column">
+														<div className="rounded-md1">Sale Control</div>
+													</div>
+													<div
+														className="ant-card-body1"
+														style={{ paddingLeft: '20px', paddingRight: '20px' }}
+													>
+														<form onSubmit={this.onSubmit}>
 															<label className="label" id="white">
 																Amount should be more than {minBuy} {netName} and less
 																than {(maxBuy - this.state.raisedAmount).toFixed(3)}{' '}
 																{netName}
 															</label>
-															<div style={{ marginTop: '20px' }}>
-																<input
-																	value={this.state.buy}
-																	onChange={(event) => this.handleInput(event)}
-																	className={classnames(
-																		'form-control form-control-lg pay-info-input',
-																		{ 'is-invalid': this.state.formErrors.buy }
-																	)}
-																	id="buy"
-																	name="buy"
-																	type="number"
-																	placeholder="0.0"
-																/>
 
-																<div className="invalid-feedback">
-																	{this.state.formErrors.buy}
-																</div>
-															</div>
-														</div>
-														<button
-															disabled={!this.state.buyValid}
-															type="submit"
-															className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
-															style={{ marginTop: '15px' }}
-														>
-															<svg
-																stroke="currentColor"
-																fill="currentColor"
-																strokeWidth="0"
-																viewBox="0 0 1024 1024"
-																height="1em"
-																width="1em"
-																xmlns="http://www.w3.org/2000/svg"
-															>
-																<path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 0 0-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z" />
-															</svg>
-															<span className="ml-2">Buy</span>
-														</button>
+															<Row>
+																<Col md={12} className="has-text-left launch-tr">
+																	Minimum Buy
+																</Col>
+																<Col
+																	md={12}
+																	className="text-white has-text-right"
+																	style={{ fontSize: '15px' }}
+																>
+																	{minBuy} {netName}
+																</Col>
+															</Row>
+															<Row>
+																<Col md={12} className="has-text-left launch-tr">
+																	Maximum Buy
+																</Col>
+																<Col md={12} className="text-white has-text-right">
+																	{maxBuy} {netName}
+																</Col>
+															</Row>
+
+															<Row>
+																<Col md={12} xs={12}>
+																	<input
+																		value={this.state.buy}
+																		onChange={(event) => this.handleInput(event)}
+																		className={classnames(
+																			'form-control form-control-lg pay-info-input',
+																			{
+																				'is-invalid': this.state.formErrors.buy
+																			}
+																		)}
+																		id="buy"
+																		name="buy"
+																		type="number"
+																		placeholder="0.0"
+																	/>
+
+																	<div className="invalid-feedback">
+																		{this.state.formErrors.buy}
+																	</div>
+																</Col>
+																<Col md={12} xs={24}>
+																	<button
+																		disabled={!this.state.buyValid}
+																		type="submit"
+																		className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
+																		style={{ marginTop: '15px' }}
+																	>
+																		<svg
+																			stroke="currentColor"
+																			fill="currentColor"
+																			strokeWidth="0"
+																			viewBox="0 0 1024 1024"
+																			height="1em"
+																			width="1em"
+																			xmlns="http://www.w3.org/2000/svg"
+																		>
+																			<path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 0 0-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z" />
+																		</svg>
+																		<span className="ml-2">Buy</span>
+																	</button>
+																</Col>
+															</Row>
+														</form>
 
 														<div style={{ marginTop: '40px' }}>
 															<button
@@ -1913,6 +1966,7 @@ class PadInfo extends Component {
 																onClick={this.onwithRawTokenName}
 																type="button"
 																className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
+																style={{ height: '28px' }}
 															>
 																<span>
 																	withdraw{' '}
@@ -1928,23 +1982,173 @@ class PadInfo extends Component {
 																</span>
 															</button>
 														</div>
-														<div style={{ marginTop: '10px' }}>
+
+														<div style={{ marginTop: '15px' }}>
 															<button
 																disabled={netNameBtn}
 																type="button"
 																className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
 																onClick={this.onwithdrawNetName}
+																style={{ height: '28px' }}
 															>
 																<span>withdraw {netName}</span>
 															</button>
 														</div>
-													</form>
+													</div>
+												</div>
+
+												<div className="ant-card ant-card-bordered">
+													{ownerState ? (
+														<div>
+															<div className="padinfo-pannel">
+																<div className="divider flex flex-column">
+																	<div className="rounded-md1">Pool Actions</div>
+																</div>
+																<div className="ant-card-body">
+																	<div className="my-2">
+																		<button
+																			disabled={finalizeBtn}
+																			type="button"
+																			className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
+																			onClick={this.onFinalizeClick}
+																		>
+																			<span>Finalize Pool</span>
+																		</button>
+																	</div>
+																	<div className="my-2">
+																		<button
+																			disabled={cancelBtn}
+																			type="button"
+																			className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
+																			onClick={this.onCancelClick}
+																		>
+																			<span>Cancel Pool</span>
+																		</button>
+																	</div>
+																	<div className="my-2">
+																		<button
+																			disabled={ownerWithDrawBtnState}
+																			type="button"
+																			className="ant-btn ant-btn-default ant-btn-block ant-btn-dangerous pay-info-action-button"
+																			onClick={this.onWithDraw}
+																		>
+																			<span>withdraw ICO</span>
+																		</button>
+																	</div>
+																</div>
+															</div>
+															<div className="padinfo-pannel yallow-border ">
+																<div className="divider flex flex-column">
+																	<div className="rounded-md1">Sale Type</div>
+																</div>
+																<div className="ant-card-body1">
+																	<div>
+																		<div>
+																			<RadioGroup
+																				style={{
+																					width: '100%',
+																					display: 'flex'
+																				}}
+																				value={whiteListState}
+																				onChange={(value) => {
+																					this.changeWhiteListState(value);
+																				}}
+																			>
+																				<Row>
+																					<Col md={12} xs={12}>
+																						<Radio
+																							value={false}
+																							className="text-white"
+																						>
+																							Public
+																						</Radio>
+																					</Col>
+																					<Col md={12} xs={12}>
+																						<Radio
+																							value={true}
+																							className="text-white"
+																						>
+																							WhiteList
+																						</Radio>
+																					</Col>
+																				</Row>
+																			</RadioGroup>
+																		</div>
+																		<List autoScroll className="info-list">
+																			{lister}
+																		</List>
+																		<h4 className="text-white">
+																			{whitelist ? whitelist.length : 0}{' '}
+																			whiteListed users
+																		</h4>
+																		{whiteListState ? (
+																			<div>
+																				<Input
+																					placeholder="whitelist address"
+																					id="pay-info-input-owner"
+																					style={{
+																						marginTop: '10px'
+																					}}
+																					value={this.state.address}
+																					onChange={this.onChangeValue}
+																				/>
+																				<Button
+																					disabled={this.state.address === ''}
+																					className="pay-info-button-add"
+																					style={{
+																						marginTop: '20px'
+																					}}
+																					onClick={this.addAddress}
+																				>
+																					Add
+																				</Button>
+																				<Button
+																					disabled={this.state.address === ''}
+																					className="pay-info-button-add"
+																					style={{
+																						marginTop: '20px'
+																					}}
+																					onClick={this.RemoveAddress}
+																				>
+																					Remove
+																				</Button>
+																			</div>
+																		) : (
+																			''
+																		)}
+																		<hr />
+																	</div>
+																</div>
+															</div>
+														</div>
+													) : (
+														<div>
+															{whileListInputState ? (
+																<div>
+																	<div className="padinfo-pannel  yallow-border">
+																		<div className="divider flex flex-column">
+																			<div className="rounded-md1">Sale Type</div>
+																		</div>
+																		<div className="ant-card-body1">
+																			<List autoScroll className="info-list ">
+																				{lister}
+																			</List>
+																			<h4 className="text-white">
+																				{whitelist ? whitelist.length : 0}{' '}
+																				whiteListed users
+																			</h4>
+																		</div>
+																	</div>
+																</div>
+															) : (
+																''
+															)}
+														</div>
+													)}
 												</div>
 											</div>
 										</div>
-									) : (
-										''
-									)}
+									</div>
 								</div>
 							)}
 						</div>
